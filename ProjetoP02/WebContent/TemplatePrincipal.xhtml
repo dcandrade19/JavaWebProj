@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+<h:head>
+	<title><ui:insert name="titulodapagina"></ui:insert></title>
+	
+
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	
+	
+	
+	<style type="text/css" >
+.bg_pagina {
+	background-image: url(imagens/bgpizzaria3.jpg);
+}
+
+.container_principal {
+	width: 100%;
+	height: auto;
+	padding-top: 30px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.div_principal {
+	padding: 2px;
+	width: 90%;
+	height: auto;
+	background: #8B0000;
+	border-radius: 4px;
+}
+</style>
+<ui:insert name="cssdapagina"></ui:insert>
+</h:head>
+
+<h:body class="bg_pagina">
+
+<nav class="navbar navbar-expand-lg navbar-light " style="background-color:  #8B0000; font-weight: bold;">
+<div class="navbar navbar-expand-lg" style="background-color:  #FFFFFF; border-radius: 5px; width: 100%">
+  <a class="navbar-brand" href="#"><img src="imagens/Pizza_48px.png" ></img>.com</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse d-flex justify-content-end">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="Cardapio.jsf"><img src="imagens/Menu_48px.png" style="padding-right: 10px; margin-left: 4px"></img>Cardapio</a>
+      </li>
+      </ul>
+       <ul class="navbar-nav">
+      <li class="nav-item d-flex flex-row">
+        <a class="nav-link" href="TelaLogin.jsf"><img src="imagens/Enter_48px.png" style="padding-right: 10px; margin-left: 4px"></img>Entrar</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="CadastroCliente.jsf"><img src="imagens/Registration_48px.png" style="padding-right: 10px; margin-left: 4px"></img>Cadastre-se</a>
+      </li>
+       <li class="nav-item " >
+        <a class="nav-link " href="TelaPedido.jsf"><img src="imagens/Cart_48px.png" style="padding-right: 10px; margin-left: 4px"></img>Pedido</a>
+      </li>
+    </ul>
+ </div>
+ </div>
+</nav>
+<div class="container_principal">
+<div class="div_principal">
+<ui:insert name="conteudodapagina">
+
+</ui:insert>
+</div>
+</div>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/popper.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.mask.min.js"></script>
+    <ui:insert name="scriptdapagina"></ui:insert>
+</h:body>
+
+</html>

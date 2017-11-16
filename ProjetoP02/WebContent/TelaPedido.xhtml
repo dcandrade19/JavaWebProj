@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="TemplatePrincipal.xhtml">
+	<ui:define name="cssdapagina">
+		<style type="text/css">
+.div_cardapio {
+	background: #FFFFFF;
+	border-radius: 5px;
+	box-sizing: content-box
+}
+</style>
+	</ui:define>
+	<ui:define name="conteudodapagina">
+		<img src="imagens/Cart_48px.png"
+			style="padding-right: 10px; margin-left: 10px"></img>
+		<div class="div_cardapio">
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Produto</th>
+						<th scope="col">Quantidade</th>
+						<th scope="col">Preço</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">1</th>
+						<td>workinprogress</td>
+						<td>workinprogress</td>
+						<td>workinprogress</td>
+					</tr>
+					<tr style="font-weight: bold;">
+						<th scope="row">1</th>
+						<td>workinprogress</td>
+						<td>workinprogress</td>
+						<td>workinprogress</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="d-flex justify-content-end">
+				<input class="btn btn-primary" style="margin-right: 8px"
+					type="submit" value="Finalizar Pedido"></input> <a
+					href="Cardapio.jsf" class="btn btn-danger">Voltar</a>
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>
+
+
+</html>

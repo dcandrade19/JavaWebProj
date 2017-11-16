@@ -1,0 +1,162 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="TemplateAdm.xhtml">
+	<ui:define name="cssdapagina">
+		<style type="text/css">
+.div_cardapio {
+	background: #FFFFFF;
+	border-radius: 5px;
+	padding: 10px;
+	box-sizing: border-box;
+}
+</style>
+	</ui:define>
+	<ui:define name="conteudodapagina">
+		<img src="imagens/Create_48px.png"
+			style="padding-right: 10px; margin-left: 10px"></img>
+
+		<div class="div_cardapio">
+			<form id="formularioProduto" jsf:id="form" method="post" onsubmit="alertar(1)"
+				enctype="multipart/form-data">
+				<div class="form-row">
+					<div class="form-group col-md-1 ">
+						<label for="codd">Codigo</label> <input type="text"
+							class="form-control" id="codd" required="required"
+							readonly="readonly" jsf:value="#{mBeanProduto.codigo}"></input>
+					</div>
+					<div class="form-group col-md-6 ">
+						<label for="nome">Nome</label> <input type="text"
+							class="form-control" id="nome" placeholder="Nome"
+							required="required" jsf:value="#{mBeanProduto.nome}"></input>
+					</div>
+					<div class="form-group">
+						<label for="exampleFormControlFile1">Foto</label> <input
+							type="file" class="form-control-file"
+							id="exampleFormControlFile1" required="required"
+							jsf:value="#{mBeanProduto.foto}"></input>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label for="descricao">Descrição</label>
+					<textarea class="form-control" id="descricao" rows="3" cols="170"
+						required="required" jsf:value="#{mBeanProduto.descricao}"></textarea>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="selecttamanho">Tamanho</label>
+						<h:selectOneMenu class="form-control" id="selecttamanho"
+							value="#{mBeanProduto.tamanho}">
+							<f:selectItem itemValue="Pequena" itemLabel="Pequena" />
+							<f:selectItem itemValue="Media" itemLabel="Média" />
+							<f:selectItem itemValue="Grande" itemLabel="Grande" />
+							<f:selectItem itemValue="Gigante" itemLabel="Gigante" />
+						</h:selectOneMenu>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="selecttipo">Tipo</label>
+						<h:selectOneMenu class="form-control" id="selecttipo"
+							value="#{mBeanProduto.tipo}">
+							<f:selectItem itemValue="Tradicional" itemLabel="Tradicional" />
+							<f:selectItem itemValue="Especial" itemLabel="Especial" />
+							<f:selectItem itemValue="Doce" itemLabel="Doce" />
+						</h:selectOneMenu>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="preco">Preço</label>
+						<div class="input-group ">
+							<span class="input-group-addon" id="preco">R$</span> <input
+								type="text" id="moeda" class="form-control"
+								aria-label="Amount (to the nearest dollar)" required="required"
+								jsf:value="#{mBeanProduto.preco}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2"></f:convertNumber>
+							</input>
+						</div>
+					</div>
+				</div>
+				
+				<div id="alerta" style="display: none;" class="alert alert-success" role="alert">
+					 <a>Produto: <strong> #{mBeanProduto.nome} </strong> Salvo!</a>
+				</div>
+				<button id="btnSalvar" type="submit" class="btn btn-primary"
+					jsf:action="#{mBeanProduto.salvar}" style="margin-right: 5px">Salvar</button>
+				<button type="reset" class="btn btn-danger" style="margin-right: 5px" >Cancelar</button>
+			</form>
+		</div>
+
+		<img src="imagens/List_48px.png"
+			style="padding-right: 10px; margin-left: 10px"></img>
+
+		<div class="div_cardapio">
+			<form jsf:id="formList" method="post" enctype="multipart/form-data">
+
+
+				<div class="form-inline" style="justify-content: space-between;">
+					<button class="btn btn-primary my-2 my-sm-0" type="submit"
+						id="btnCarregar" jsf:action="#{mBeanProduto.carregar()}">Atualizar</button>
+					<div>
+						<input id="busca" style="margin-right: 5px" class="form-control"
+							type="search" placeholder="Informe o Codigo" aria-label="Search"
+							jsf:value="#{mBeanProduto.codigo}"></input>
+						<button class="btn btn-primary my-2 my-sm-0" type="submit"
+							id="btnBuscar" jsf:action="#{mBeanProduto.buscar()}">Buscar</button>
+					</div>
+				</div>
+				<table class="table">
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Nome</th>
+						<th scope="col">Foto</th>
+						<th scope="col">Descrição</th>
+						<th scope="col">Tamanho</th>
+						<th scope="col">Tipo</th>
+						<th scope="col">Preço</th>
+					</tr>
+
+					<ui:repeat id="uiRep" var="produto"
+						value="#{mBeanProduto.produtos}">
+						<tr>
+							<th scope="row" id="codi">#{produto.codigo}</th>
+							<td style="max-width: 180px; overflow: auto;">#{produto.nome}</td>
+							<td style="max-width: 180px; overflow: auto;">#{produto.foto}</td>
+							<td style="max-width: 180px; overflow: auto;">#{produto.descricao}</td>
+							<td>#{produto.tamanho}</td>
+							<td>#{produto.tipo}</td>
+							<td>#{produto.preco}</td>
+							<td><button class="btn btn-danger" type="submit"
+									id="btnExcluir2" jsf:action="#{mBeanProduto.excluir(produto)}"
+									style="margin-right: 5px">Excluir</button>
+
+								<button class="btn btn-primary" type="submit" id="btnEditar2"
+									style="margin-right: 5px"
+									jsf:action="#{mBeanProduto.alterar(produto)}">Editar</button></td>
+						</tr>
+
+					</ui:repeat>
+
+				</table>
+
+			</form>
+
+
+
+
+		</div>
+	</ui:define>
+	<ui:define name="scriptdapagina">
+		<script type="text/javascript">
+			$('#moeda').mask('000.000.000,00', {
+				reverse : true
+			});
+		</script>
+		<script src="js/script-teste.js"></script>
+
+	</ui:define>
+</ui:composition>
+
+
+</html>
