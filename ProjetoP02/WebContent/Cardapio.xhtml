@@ -31,6 +31,7 @@
 			style="padding-right: 10px; margin-left: 10px"></img>
 		<div class="div_cardapio">
 			<div class="card-columns">
+			<form  jsf:id="form" method="post">
 				<ui:repeat var="pizza" value="#{mBeanProduto.produtos}">
 
 					<div class="card">
@@ -41,10 +42,12 @@
 							<p class="card-text" style="font-weight: bold;">#{pizza.tipo}</p>
 							<p class="card-text">#{pizza.descricao}</p>
 							<p class="card-text">R$ #{pizza.preco}</p>
-							<a href="#" class="btn btn-primary">Adicionar ao Pedido</a>
+							<input type="submit" class="btn btn-primary" 
+							jsf:action="#{mBeanPedido.adicionar(pizza.codigo)}" value="Adicionar ao Pedido"></input>
 						</div>
 					</div>
 				</ui:repeat>
+				</form>
 			</div>
 		</div>
 	</ui:define>	

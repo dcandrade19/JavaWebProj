@@ -8,10 +8,15 @@
 <ui:composition template="TemplatePrincipal.xhtml">
 	<ui:define name="cssdapagina">
 		<style type="text/css">
+		
+.div_principal {
+max-width: 60%;
+}		
 .div_cardapio {
 	background: #FFFFFF;
 	border-radius: 5px;
-	box-sizing: content-box
+	box-sizing: content-box;
+
 }
 </style>
 	</ui:define>
@@ -24,27 +29,38 @@
 					<tr>
 						<th scope="col">#</th>
 						<th scope="col">Produto</th>
+						<th scope="col">Tipo</th>
 						<th scope="col">Quantidade</th>
 						<th scope="col">Preço</th>
 					</tr>
 				</thead>
 				<tbody>
+				<form jsf:id="form" method="post">
+				<ui:repeat var="item" value="#{mBeanPedido.itens}">
 					<tr>
-						<th scope="row">1</th>
-						<td>workinprogress</td>
-						<td>workinprogress</td>
-						<td>workinprogress</td>
+						<th scope="row">#{item.produto.codigo}</th>
+						<td>#{item.produto.nome}</td>
+						<td>#{item.produto.tipo}</td>
+						<td>#{item.quantidade}</td>
+						<td>#{item.produto.preco}</td>
+						<td>
+						<div class="d-flex justify-content-end">
+						<input class="btn btn-danger" style="margin-right: 8px"
+					type="submit" value="Remover" jsf:action="#{mBeanPedido.remover(item)}"></input>
+						</div>
+					</td>
 					</tr>
-					<tr style="font-weight: bold;">
-						<th scope="row">1</th>
-						<td>workinprogress</td>
-						<td>workinprogress</td>
-						<td>workinprogress</td>
+					</ui:repeat>
+					<tr>
+					<th colspan="3"></th>
+					<th>Total</th>
+					<th>#{mBeanPedido.total}</th>
 					</tr>
-				</tbody>
+					</form>
+					</tbody>
 			</table>
-			<div class="d-flex justify-content-end">
-				<input class="btn btn-primary" style="margin-right: 8px"
+			<div class="d-flex justify-content-end" style="padding: 10px">
+				<input class="btn btn-primary" style="margin-right: 8px;"
 					type="submit" value="Finalizar Pedido"></input> <a
 					href="Cardapio.jsf" class="btn btn-danger">Voltar</a>
 			</div>
