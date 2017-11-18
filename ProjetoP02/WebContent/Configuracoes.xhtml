@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+<ui:composition id="temp" template="TemplatePrincipal.xhtml">
+<ui:define name="cssdapagina">
+		<style type="text/css">
+.container_principal {
+
+	width: 100%;
+}
+.div_principal {
+ width: auto;
+ 
+}		
+		
+.div_cardapio {
+	background: #FFFFFF;
+	border-radius: 5px;
+	padding: 10px;
+	width: 134px;
+	display: inline-block;
+	
+	box-sizing: border-box;
+	
+}
+
+</style>
+	</ui:define>
+	<ui:define name="conteudodapagina">
+	<form jsf:id="form" method="post">	
+	<img src="imagens/settings_48px.png"
+			style="padding-right: 10px; margin-left: 5px; display: list-item;"></img>
+	
+	<div class="div_cardapio">
+
+		
+		<img src="imagens/icons8-user-100.png" style="width: 100%; margin: 0 auto;"></img>
+		<button style="width: 100%; margin: 0 auto;" type="submit" jsf:action="#{mBeanPedido.alterarTela('user')}" class="btn btn-primary">Modo Cliente</button>
+		
+
+	</div>
+	<div class="div_cardapio">
+
+		
+		<img src="imagens/icons8-admin-100.png" style="width: 100%; margin: 0 auto;"></img>
+		<button style="width: 100%; margin: 0 auto;" type="submit" jsf:action="#{mBeanPedido.alterarTela('adm')}" class="btn btn-primary">Modo ADM</button>
+		
+
+	</div>
+	</form>
+	
+ 	</ui:define>
+ 	<ui:define name="scriptdapagina">
+		
+		<script src="js/script-teste.js"></script>
+
+	</ui:define>
+</ui:composition>
+</html>

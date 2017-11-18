@@ -2,12 +2,9 @@ package projetop.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import javafx.util.converter.BigDecimalStringConverter;
 import projetop.dao.ProdutoDao;
 import projetop.entity.Item;
 import projetop.entity.Produto;
@@ -16,6 +13,8 @@ import projetop.entity.Produto;
 @SessionScoped
 public class MBeanPedido {
 
+	private String tela;
+	
 	private ArrayList<Item> itens = new ArrayList<Item>();
 	private BigDecimal total = new BigDecimal(0);
 	
@@ -35,6 +34,12 @@ public class MBeanPedido {
 		return "TelaPedido.jsf";
 	}
 
+	
+	public void alterarTela(String tipo) {
+		if(tipo != tela) {
+			tela = tipo;	
+		}
+	}
 	
 	public void remover(Item item) {
 		
@@ -60,7 +65,16 @@ public class MBeanPedido {
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
-	
-	
-	
+
+
+	public String getTela() {
+		return tela;
+	}
+
+
+	public void setTela(String tela) {
+		this.tela = tela;
+	}
+
+
 }
