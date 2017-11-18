@@ -5,12 +5,19 @@ package projetop.entity;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @author Diego
  *
  */
+@Entity
+@Table(name="TAB_CLIENTE")
 public class Cliente {
 	
+	@Id
 	private String cpf;
 	private String nome;
 	private String telefone;
@@ -109,23 +116,5 @@ public class Cliente {
 				+ ", complemento=" + complemento + ", cidade=" + cidade + ", estado=" + estado + ", cep=" + cep
 				+ ", status=" + status + "]";
 	}
-	public Cliente(String cpf, String nome, String telefone, String celular, Date nascimento, String email,
-			String senha, String rua, String complemento, String cidade, String estado, String cep, Boolean status) {
-		super();
-		this.cpf = cpf;
-		this.nome = nome;
-		this.telefone = telefone;
-		this.celular = celular;
-		this.nascimento = nascimento;
-		this.email = email;
-		this.senha = senha;
-		this.rua = rua;
-		this.complemento = complemento;
-		this.cidade = cidade;
-		this.estado = estado;
-		this.cep = cep;
-		this.status = status;
-	}
-	
 	
 }
