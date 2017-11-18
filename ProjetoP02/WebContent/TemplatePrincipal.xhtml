@@ -51,19 +51,12 @@ li:hover img {
 		window.onload = function alterar() {
 
 			if ('#{mBeanPedido.tela}' == 'user') {
-				$("#produto").css("display", "none");
-				$("#cardapio").css("display", "inherit");
-				$("#login").css("display", "inherit");
-				$("#cliente").css("display", "inherit");
-				$("#pedido").css("display", "inherit");
+				$(".adm").css("display", "none");
+				$(".cliente").css("display", "inherit");
 
 			} else if ('#{mBeanPedido.tela}' == 'adm') {
-				$("#cardapio").css("display", "none");
-				$("#login").css("display", "none");
-				$("#cliente").css("display", "none");
-				$("#pedido").css("display", "none");
-				$("#produto").css("display", "inherit");
-
+				$(".cliente").css("display", "none");
+				$(".adm").css("display", "inherit");
 			}
 
 		}
@@ -84,25 +77,25 @@ li:hover img {
 				</ul>
 			</div>
 			<div class="collapse navbar-collapse d-flex justify-content-end">
-				<ul id="cardapio" style="display: none" class="navbar-nav">
+				<ul  style="display: none" class="navbar-nav cliente">
 					<li class="nav-item"><a class="nav-link" href="Cardapio.jsf"><img
 							src="imagens/Menu_48px.png"></img>Cardapio</a></li>
 				</ul>
-				<ul id="login" style="display: none" class="navbar-nav">
+				<ul  style="display: none" class="navbar-nav cliente">
 					<li class="nav-item "><a class="nav-link" href="TelaLogin.jsf"><img
 							src="imagens/Enter_48px.png"></img>Entrar</a></li>
 				</ul>
-				<ul id="cliente" style="display: none" class="navbar-nav">
+				<ul style="display: none" class="navbar-nav cliente">
 					<li class="nav-item"><a class="nav-link"
 						href="CadastroCliente.jsf"><img
 							src="imagens/Registration_48px.png"></img>Cadastrar</a></li>
 				</ul>
-				<ul id="pedido" style="display: none" class="navbar-nav">
+				<ul  style="display: none" class="navbar-nav cliente">
 					<li class="nav-item "><a class="nav-link "
 						href="TelaPedido.jsf"><img src="imagens/Cart_48px.png"></img>Pedido</a>
 					</li>
 				</ul>
-				<ul id="produto" style="display: none" class="navbar-nav">
+				<ul  style="display: none" class="navbar-nav adm">
 					<li class="nav-item"><a class="nav-link"
 						href="ListaProdutos.jsf"><img src="imagens/List_48px.png"></img>Produtos</a>
 					</li>
