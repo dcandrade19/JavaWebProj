@@ -18,13 +18,13 @@ import projetop.entity.Produto;
 @WebServlet("/servletImagem")
 public class servletImagem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private FileInputStream fis;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public servletImagem() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -35,7 +35,7 @@ public class servletImagem extends HttpServlet {
 		Produto produto = new ProdutoDao().buscar(Integer.parseInt(codigo));
 		
 		File f = new File(produto.getFoto());
-		FileInputStream fis = new FileInputStream(f);
+		fis = new FileInputStream(f);
 		byte [] arrayImagem = new byte[(int)f.length()];
 		fis.read(arrayImagem);
 		
@@ -46,7 +46,6 @@ public class servletImagem extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

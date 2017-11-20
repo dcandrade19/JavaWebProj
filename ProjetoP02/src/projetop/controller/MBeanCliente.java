@@ -4,15 +4,12 @@
 package projetop.controller;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
 
 import projetop.dao.ClienteDao;
-import projetop.dao.ProdutoDao;
 import projetop.entity.Cliente;
-import projetop.entity.Produto;
 
 /**
  * @author Diego

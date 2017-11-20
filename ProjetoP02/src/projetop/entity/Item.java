@@ -1,7 +1,5 @@
 package projetop.entity;
 
-import java.math.BigDecimal;
-
 public class Item {
 
 	private Integer codigo;

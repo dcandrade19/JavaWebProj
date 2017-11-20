@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 import javax.faces.bean.ManagedBean;
@@ -37,6 +36,8 @@ public class MBeanProduto {
 	 private String tamanho;
 	 private String tipo;
 	 private BigDecimal preco;
+
+	private FileOutputStream fos;
 	 
 	/**
 	 *  Cria o Dao e chama a função que gera a list de Produtos.
@@ -64,8 +65,7 @@ public class MBeanProduto {
 			foto.getInputStream().read(bytesImagem);
 			// Cria uma referencia ao arquivo que vai ser criado
 			File f = new File(caminhoImagem);
-			// Cria o objeto que ira manipular o arquivo criado
-			FileOutputStream fos = new FileOutputStream(f);
+			fos = new FileOutputStream(f);
 			// Escreve o conteudo da imagem (upload) dentro do arquivo no servidor
 			fos.write(bytesImagem);
 			
@@ -197,7 +197,7 @@ public class MBeanProduto {
 	}
 
 	public void setProdutos(ArrayList<Produto> produtos) {
-		this.produtos = produtos;
+		MBeanProduto.produtos = produtos;
 	}
 
 	public  Produto getResultadoBusca() {
