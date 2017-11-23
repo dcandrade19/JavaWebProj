@@ -8,65 +8,68 @@
 <ui:composition template="TemplatePrincipal.xhtml">
 	<ui:define name="cssdapagina">
 		<style type="text/css">
-		
 .div_principal {
-max-width: 60%;
-}		
+	max-width: 60%;
+}
+
 .div_cardapio {
 	background: #FFFFFF;
 	border-radius: 5px;
 	box-sizing: content-box;
-
 }
 </style>
 	</ui:define>
 	<ui:define name="conteudodapagina">
-		<img src="imagens/Cart_48px.png"
-			style="padding-right: 10px; margin-left: 10px"></img>
-		<div class="div_cardapio">
-			<table class="table">
-				<thead class="thead-dark">
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">Produto</th>
-						<th scope="col">Tipo</th>
-						<th scope="col">Quantidade</th>
-						<th scope="col">Preço</th>
-					</tr>
-				</thead>
-				<tbody>
-				<form jsf:id="form" method="post">
-				<ui:repeat var="item" value="#{mBeanPedido.itens}">
-					<tr>
-						<th scope="row">#{item.produto.codigo}</th>
-						<td>#{item.produto.nome}</td>
-						<td>#{item.produto.tipo}</td>
-						<td>#{item.quantidade}</td>
-						<td>#{item.produto.preco}</td>
-						<td>
-						<div class="d-flex justify-content-end">
-						<input class="btn btn-danger" style="margin-right: 8px"
-					type="submit" value="Remover" jsf:action="#{mBeanPedido.remover(item)}"></input>
-						</div>
-					</td>
-					</tr>
-					</ui:repeat>
-					<tr>
-					<th colspan="3"></th>
-					<th>Total</th>
-					<th>#{mBeanPedido.total}</th>
-					</tr>
-					</form>
+		<form jsf:id="form" method="post">
+			<img src="imagens/Cart_48px.png"
+				style="padding-right: 10px; margin-left: 10px"></img>
+			<div class="div_cardapio">
+				<table class="table table-striped table-dark" style="border: 8px solid #fff; width: 99%">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Produto</th>
+							<th scope="col">Tipo</th>
+							<th scope="col">Quantidade</th>
+							<th scope="col">Preço</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<ui:repeat var="item" value="#{mBeanPedido.itens}">
+							<tr>
+								<th scope="row">#{item.produto.codigo}</th>
+								<td>#{item.produto.nome}</td>
+								<td>#{item.produto.tipo}</td>
+								<td>#{item.quantidade}</td>
+								<td>#{item.total}</td>
+								<td>
+									<div class="d-flex justify-content-end">
+										<input class="btn btn-danger" style="margin-right: 8px"
+											type="submit" value="Remover"
+											jsf:action="#{mBeanPedido.remover(item)}"></input>
+									</div>
+								</td>
+							</tr>
+						</ui:repeat>
+						<tr>
+							<th colspan="3"></th>
+							<th>Total</th>
+							<th>#{mBeanPedido.total}</th>
+							<th></th>
+						</tr>
 					</tbody>
-			</table>
-			<div class="d-flex justify-content-end" style="padding: 10px">
-				<input class="btn btn-primary" style="margin-right: 8px;"
-					type="submit" value="Finalizar Pedido"></input> <a
-					href="Cardapio.jsf" class="btn btn-danger">Voltar</a>
+				</table>
+				<div class="d-flex justify-content-end" style="padding: 10px">
+					<input class="btn btn-primary" style="margin-right: 8px;"
+						type="submit" value="Finalizar Pedido"
+						jsf:action="#{mBeanPedido.salvarPedido}"></input> <a
+						href="Cardapio.jsf" class="btn btn-danger">Voltar</a>
+				</div>
 			</div>
-		</div>
-
+		</form>
 	</ui:define>
+
 </ui:composition>
 
 

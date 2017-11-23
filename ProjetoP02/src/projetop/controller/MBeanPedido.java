@@ -2,11 +2,15 @@ package projetop.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import projetop.dao.PedidoDao;
 import projetop.dao.ProdutoDao;
 import projetop.entity.Item;
+import projetop.entity.Pedido;
 import projetop.entity.Produto;
 
 @ManagedBean (name = "mBeanPedido")
@@ -18,22 +22,62 @@ public class MBeanPedido {
 	private ArrayList<Item> itens = new ArrayList<Item>();
 	private BigDecimal total = new BigDecimal(0);
 	
+	public String salvarPedido() {
+		Pedido pedido = new Pedido();
+		pedido.setData(new Date());
+		pedido.setItens(itens);
+		for(Item item : itens) {
+			item.setPedido(pedido);
+		}
+		
+		new PedidoDao().inserir(pedido);
+		
+		
+		return "";
+	}
+	
 	public String adicionar(Integer codigo) {
 		
-		Item item = new Item();
 		Produto produto = new ProdutoDao().buscar(codigo);
 		
-		item.setProduto(produto);
-		item.setQuantidade(1);
-
-		itens.add(item);
-
-		// adicionando o preco do produto ao preco total
-		total = total.add(new BigDecimal(produto.getPreco().toString()));
+		Item item = buscarProduto(produto);
 		
+		if(item == null) {
+			item = new Item();
+			item.setProduto(produto);
+			item.setQuantidade(1);
+			item.setTotal(produto.getPreco());
+			itens.add(item);
+		} else {
+			item.setQuantidade(item.getQuantidade() + 1);
+			item.setTotal(calcularCusto(item));
+		}
+		
+		// adicionando o preco do produto ao preco total
+		total =	total.add(item.getProduto().getPreco());
+
 		return "TelaPedido.jsf";
 	}
 
+	
+	public Item buscarProduto(Produto produto) {
+		
+		for(Item item : itens) {
+			if(item.getProduto().getCodigo() == produto.getCodigo()) {
+				return item;
+			} 
+		}
+		
+		return null;
+	}
+	
+	public BigDecimal calcularCusto(Item item) {
+		
+		BigDecimal custo = item.getProduto().getPreco().multiply(new BigDecimal(item.getQuantidade()));
+
+		return custo;
+	}
+	
 	
 	public void alterarTela(String tipo) {
 		if(tipo != tela) {
@@ -45,7 +89,7 @@ public class MBeanPedido {
 		
 		itens.remove(item);
 		// subtraindo o preco do produto do preco total
-		total = total.subtract(new BigDecimal(item.getProduto().getPreco().toString()));
+		total = total.subtract(item.getTotal());
 	}
 	
 	public ArrayList<Item> getItens() {
@@ -75,6 +119,5 @@ public class MBeanPedido {
 	public void setTela(String tela) {
 		this.tela = tela;
 	}
-
 
 }

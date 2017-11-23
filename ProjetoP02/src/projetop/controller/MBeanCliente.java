@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.faces.bean.ManagedBean;
 
 import projetop.dao.ClienteDao;
+import projetop.dao.ProdutoDao;
 import projetop.entity.Cliente;
 
 /**
@@ -66,7 +67,13 @@ public class MBeanCliente {
 		System.out.println(cliente.toString());
 	}
 
-	public void alterar(Cliente cliente) {
+		public void carregar() {
+		
+		clientes = new ClienteDao().listar();
+		
+	}
+	
+	public String alterar(Cliente cliente) {
 		this.cpf = cliente.getCpf();
 		this.nome = cliente.getNome();
 		this.telefone = cliente.getTelefone();
@@ -80,8 +87,20 @@ public class MBeanCliente {
 		this.estado = cliente.getEstado();
 		this.cep = cliente.getCep();
 		this.status = cliente.getStatus();
+		
+		return "CadastroCliente.jsf";
 	}
 
+	public void ativar_desativar(Cliente cliente) {
+		if(cliente.getStatus()) {
+			cliente.setStatus(false);
+			new ClienteDao().alterar(cliente);
+		} else {
+			cliente.setStatus(true);
+			new ClienteDao().alterar(cliente);
+		}
+	}
+	
 	public void excluir(Cliente cliente) {
 		new ClienteDao().remover(cliente.getCpf());
 		clientes = new ClienteDao().listar();

@@ -17,7 +17,7 @@
 </style>
 	</ui:define>
 	<ui:define name="conteudodapagina">
-		<img src="imagens/Create_48px.png"
+		<img src="imagens/Product_48px.png"
 			style="padding-right: 10px; margin-left: 10px"></img>
 
 		<div class="div_cardapio">
@@ -106,7 +106,7 @@
 							id="btnBuscar" jsf:action="#{mBeanProduto.buscar()}">Buscar</button>
 					</div>
 				</div>
-				<table class="table">
+				<table class="table table-striped table-dark" style="border: 8px solid #fff; width: 100%; white-space: nowrap;">
 					<tr>
 						<th scope="col">#</th>
 						<th scope="col">Nome</th>
@@ -115,6 +115,7 @@
 						<th scope="col">Tamanho</th>
 						<th scope="col">Tipo</th>
 						<th scope="col">Preço</th>
+						<th></th>
 					</tr>
 
 					<ui:repeat id="uiRep" var="produto"
@@ -122,8 +123,8 @@
 						<tr>
 							<th scope="row" id="codi">#{produto.codigo}</th>
 							<td style="max-width: 180px; overflow: auto;">#{produto.nome}</td>
-							<td style="max-width: 180px; overflow: auto;">#{produto.foto}</td>
-							<td style="max-width: 180px; overflow: auto;">#{produto.descricao}</td>
+							<td style="max-width: 220px; overflow: hidden; text-overflow: ellipsis;">#{produto.foto}</td>
+							<td style="min-width: 220px; overflow: hidden; text-overflow: ellipsis;">#{produto.descricao}</td>
 							<td>#{produto.tamanho}</td>
 							<td>#{produto.tipo}</td>
 							<td>#{produto.preco}</td>

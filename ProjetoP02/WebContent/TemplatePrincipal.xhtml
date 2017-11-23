@@ -35,14 +35,35 @@
 	background: #8B0000;
 	border-radius: 4px;
 }
+.circle {
+    position: absolute;
+	background: #007BFF;
+	border-radius: 50%;
+	width: 24px;
+	height: 0px;
+	z-index: 20;
+	top: 2px;
+	right: 200px;
+	color: #fff;
+	text-align: center;
+	font-size: 0px;
+	padding: 0;
+	transition: height 0.3s;
+	transition: font-size 0.3s;
+}
 
 li img {
 	width: 36%;
 	transition: width 0.3s;
+	
 }
 
 li:hover img {
-	width: 40%;
+	width: 40%;	
+}
+li:hover .circle {
+	height: 24px;
+	font-size: 15px;
 }
 </style>
 	<ui:insert name="cssdapagina"></ui:insert>
@@ -91,13 +112,19 @@ li:hover img {
 							src="imagens/Registration_48px.png"></img>Cadastrar</a></li>
 				</ul>
 				<ul  style="display: none" class="navbar-nav cliente">
-					<li class="nav-item "><a class="nav-link "
+					<li class="nav-item"><a class="nav-link "
 						href="TelaPedido.jsf"><img src="imagens/Cart_48px.png"></img>Pedido</a>
+						<div class='circle'>#{mBeanPedido.itens.size()}</div>
 					</li>
 				</ul>
 				<ul  style="display: none" class="navbar-nav adm">
 					<li class="nav-item"><a class="nav-link"
-						href="ListaProdutos.jsf"><img src="imagens/List_48px.png"></img>Produtos</a>
+						href="ListaProdutos.jsf"><img src="imagens/Product_48px.png"></img>Produtos</a>
+					</li>
+				</ul>
+				<ul  style="display: none" class="navbar-nav adm">
+					<li class="nav-item"><a class="nav-link"
+						href="ListaClientes.jsf"><img src="imagens/User_48px.png"></img>Clientes</a>
 					</li>
 				</ul>
 				<ul id="opcoes" class="navbar-nav">
