@@ -17,6 +17,7 @@ public class PedidoDao {
 		em.getTransaction().begin();
 		em.persist(pedido);
 		em.getTransaction().commit();
+		em.close();
 	}
 	
 	public Pedido buscar(Integer codigo) {
@@ -24,6 +25,7 @@ public class PedidoDao {
 		em.getTransaction().begin();
 		Pedido pedido = em.find(Pedido.class, codigo);		
 		em.getTransaction().commit();
+		em.close();
 		return pedido;
 	}	
 	
@@ -31,8 +33,9 @@ public class PedidoDao {
 	public ArrayList<Pedido> listar() {
 		EntityManager em = Conexao.getInstance().createEntityManager();
 		Query q = em.createQuery("from Pedido");
-		
-		return new ArrayList<Pedido>(q.getResultList());
+		ArrayList<Pedido> list = new ArrayList<Pedido>(q.getResultList());
+		em.close();
+		return list;
 	}
 	
 	public void alterar(Pedido pedido) {	
@@ -40,6 +43,7 @@ public class PedidoDao {
 		em.getTransaction().begin();
 		em.merge(pedido);
 		em.getTransaction().commit();
+		em.close();
 	}
 	
 	public void remover(Integer integer) {	
@@ -48,5 +52,6 @@ public class PedidoDao {
 		Pedido pedido = em.find(Pedido.class, integer);		
 		em.remove(pedido);
 		em.getTransaction().commit();
+		em.close();
 	}
 }

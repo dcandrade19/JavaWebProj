@@ -31,6 +31,7 @@ public class Cliente {
 	private String estado;
 	private String cep;
 	private Boolean status;
+
 	public String getCpf() {
 		return cpf;
 	}

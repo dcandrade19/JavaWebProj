@@ -6,10 +6,12 @@ package projetop.controller;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import projetop.dao.ClienteDao;
-import projetop.dao.ProdutoDao;
 import projetop.entity.Cliente;
 
 /**
@@ -37,6 +39,20 @@ public class MBeanCliente {
 	private String cep;
 	private Boolean status;
 
+	public void setAdm() {
+
+			if(new ClienteDao().buscar("000.000.000-00") == null) {
+				Cliente cliente = new Cliente();
+				cliente.setCpf("000.000.000-00");
+				cliente.setNome("Adm");
+				cliente.setSenha("admin");
+				new ClienteDao().inserir(cliente);
+				System.out.println("Conta ADM criada.");
+			} else {
+				System.out.println("Conta ADM localizada.");
+			}
+	}
+	
 	public void salvar() {
 		Cliente cliente = new Cliente();
 
@@ -138,22 +154,50 @@ public class MBeanCliente {
 		}
 	}
 		
-	public void entrar(String senha) {
+	public String entrar(String senha) {
 		if (cpf != null) {
 			Cliente cliente = new ClienteDao().buscar(cpf);
 			if(cliente != null) {
 				if(cliente.getSenha().equals(senha)) {
 					System.out.println("Entrando como: " + cliente.getNome() + ".");
+					//capture o objeto de request
+					//nele é possível recuperar a sessão		
+					HttpServletRequest req = (HttpServletRequest) 
+							FacesContext.getCurrentInstance().
+							getExternalContext().getRequest();
+					//adiciono na sessão o usuário que fez o login
+					req.getSession().setAttribute("cliente", cliente);
+
+					//redireciono para tela que ele estava tentando acessar
+			return ""+req.getSession().getAttribute("pagina");
 				} else {
-					System.out.println("Senha errada!");
+					FacesContext.getCurrentInstance().
+					addMessage("", 
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+						"Login ou senha inválidos!", ""));
+					return "";
 				}
-			} else {
-				System.out.println("CPF: " + cpf + " não localizado!");
-			}
-			
+			} 
 		}
+		FacesContext.getCurrentInstance().
+		addMessage("", 
+	new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+			"Dados inválidos!", ""));
+		return "";
+	}
+	
+	public String sair() {
+		
+		HttpServletRequest req = (HttpServletRequest) 
+				FacesContext.getCurrentInstance().
+				getExternalContext().getRequest();
+		
+		req.getSession().setAttribute("cliente", null);
+		
+		return "index.jsf";
 	}
 
+	
 	public ArrayList<Cliente> getClientes() {
 		return clientes;
 	}

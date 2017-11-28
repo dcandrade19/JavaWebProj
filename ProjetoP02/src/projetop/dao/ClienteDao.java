@@ -17,6 +17,7 @@ public class ClienteDao {
 		em.getTransaction().begin();
 		em.persist(cliente);
 		em.getTransaction().commit();
+		em.close();
 	}
 	
 	public Cliente buscar(String cpf) {
@@ -24,14 +25,17 @@ public class ClienteDao {
 		em.getTransaction().begin();
 		Cliente cliente = em.find(Cliente.class, cpf);		
 		em.getTransaction().commit();
+		em.close();
 		return cliente;
 	}	
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<Cliente> listar() {
 		EntityManager em = Conexao.getInstance().createEntityManager();
 		Query q = em.createQuery("from Cliente");
-		
-		return new ArrayList<Cliente>(q.getResultList());
+		ArrayList<Cliente> list = new ArrayList<Cliente>(q.getResultList());
+		em.close();
+		return list;
 	}
 	
 	public void alterar(Cliente cliente) {	
@@ -39,6 +43,7 @@ public class ClienteDao {
 		em.getTransaction().begin();
 		em.merge(cliente);
 		em.getTransaction().commit();
+		em.close();
 	}
 	
 	public void remover(String cpf) {	
@@ -47,5 +52,6 @@ public class ClienteDao {
 		Cliente cliente = em.find(Cliente.class, cpf);		
 		em.remove(cliente);
 		em.getTransaction().commit();
+		em.close();
 	}
 }

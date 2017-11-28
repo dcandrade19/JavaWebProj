@@ -17,6 +17,7 @@ public class ProdutoDao {
 		em.getTransaction().begin();
 		em.persist(produto);
 		em.getTransaction().commit();
+		em.close();
 	}
 	
 	public Produto buscar(Integer codigo) {
@@ -24,14 +25,17 @@ public class ProdutoDao {
 		em.getTransaction().begin();
 		Produto produto = em.find(Produto.class, codigo);		
 		em.getTransaction().commit();
+		em.close();
 		return produto;
 	}	
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<Produto> listar() {
 		EntityManager em = Conexao.getInstance().createEntityManager();
 		Query q = em.createQuery("from Produto");
-		
-		return new ArrayList<Produto>(q.getResultList());
+		ArrayList<Produto> list = new ArrayList<Produto>(q.getResultList());
+		em.close();
+		return list;
 	}
 	
 	public void alterar(Produto produto) {	
@@ -39,6 +43,7 @@ public class ProdutoDao {
 		em.getTransaction().begin();
 		em.merge(produto);
 		em.getTransaction().commit();
+		em.close();
 	}
 	
 	public void remover(Integer integer) {	
@@ -47,5 +52,6 @@ public class ProdutoDao {
 		Produto produto = em.find(Produto.class, integer);		
 		em.remove(produto);
 		em.getTransaction().commit();
+		em.close();
 	}
 }

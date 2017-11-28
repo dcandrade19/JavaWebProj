@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -17,6 +18,9 @@ public class Pedido {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer codigo;
 	private Date data;
+	
+	@ManyToOne
+	private Cliente cliente;
 	
 	@OneToMany(mappedBy="pedido",cascade=CascadeType.ALL)
 	private List<Item> itens;
@@ -43,7 +47,15 @@ public class Pedido {
 
 	public void setItens(List<Item> itens) {
 		this.itens = itens;
-		System.out.println(itens);
+
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 	
 	

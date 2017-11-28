@@ -11,8 +11,6 @@
 
 	<link href="css/bootstrap.min.css" rel="stylesheet" />
 
-
-
 	<style type="text/css">
 .bg_pagina {
 	background-image: url(imagens/bgpizzaria3.jpg);
@@ -41,9 +39,10 @@
 	border-radius: 50%;
 	width: 24px;
 	height: 0px;
+	margin: 0px;
 	z-index: 20;
-	top: 2px;
-	right: 200px;
+	top: -8px;
+	right: 0px;
 	color: #fff;
 	text-align: center;
 	font-size: 0px;
@@ -51,32 +50,51 @@
 	transition: height 0.3s;
 	transition: font-size 0.3s;
 }
-
-li img {
-	width: 36%;
-	transition: width 0.3s;
-	
+li {
+	border-style: solid;
+	border-width: 0 0 3px 3px;
+	border-radius: 50%;
+	margin: 3px 3px 3px 0;
+	padding: -3px;
+	border-color: rgba(139, 0, 0,.0);
+	transition: border-color linear 0.6s;
 }
-
-li:hover img {
-	width: 40%;	
+li>a>img {
+	width: 30px;
+}
+.active {
+	border-color: rgba(139, 0, 0,1.0);
+}
+li:hover {
+	border-color: rgba(139, 0, 0,1.0);
+	
 }
 li:hover .circle {
 	height: 24px;
 	font-size: 15px;
+}
+.nav-link {
+	padding: 0;
 }
 </style>
 	<ui:insert name="cssdapagina"></ui:insert>
 
 	<script type="text/javascript">
 		window.onload = function alterar() {
+			
+			#{mBeanCliente.setAdm()};
+			#{mBeanPedido.alterarTela()};
+			
+			if ('#{mBeanPedido.tela}' == 'logado') {
+				$(".deslogado").css("display", "none");
+				$(".logado").css("display", "inherit");
 
-			if ('#{mBeanPedido.tela}' == 'user') {
-				$(".adm").css("display", "none");
-				$(".cliente").css("display", "inherit");
-
-			} else if ('#{mBeanPedido.tela}' == 'adm') {
-				$(".cliente").css("display", "none");
+			} else if ('#{mBeanPedido.tela}' == 'deslogado') {
+				$(".logado").css("display", "none");
+				$(".deslogado").css("display", "inherit");
+			} else {
+				$(".logado").css("display", "inherit");
+				$(".deslogado").css("display", "inherit");
 				$(".adm").css("display", "inherit");
 			}
 
@@ -97,40 +115,43 @@ li:hover .circle {
 					</li>
 				</ul>
 			</div>
-			<div class="collapse navbar-collapse d-flex justify-content-end">
-				<ul  style="display: none" class="navbar-nav cliente">
+			<div class="collapse navbar-collapse d-flex justify-content-end" >
+				<ul  class="navbar-nav" style=" width: auto; white-space: nowrap;">
 					<li class="nav-item"><a class="nav-link" href="Cardapio.jsf"><img
 							src="imagens/Menu_48px.png"></img>Cardapio</a></li>
-				</ul>
-				<ul  style="display: none" class="navbar-nav cliente">
-					<li class="nav-item "><a class="nav-link" href="TelaLogin.jsf"><img
+				
+				
+					<li class="nav-item deslogado" style="display: none"><a class="nav-link" href="TelaLogin.jsf"><img
 							src="imagens/Enter_48px.png"></img>Entrar</a></li>
-				</ul>
-				<ul style="display: none" class="navbar-nav cliente">
-					<li class="nav-item"><a class="nav-link"
-						href="CadastroCliente.jsf"><img
-							src="imagens/Registration_48px.png"></img>Cadastrar</a></li>
-				</ul>
-				<ul  style="display: none" class="navbar-nav cliente">
-					<li class="nav-item"><a class="nav-link "
+				
+				
+				<div style="position: relative">
+					<li class="nav-item logado" style="display: none"><a class="nav-link "
 						href="TelaPedido.jsf"><img src="imagens/Cart_48px.png"></img>Pedido</a>
 						<div class='circle'>#{mBeanPedido.itens.size()}</div>
+						
 					</li>
-				</ul>
-				<ul  style="display: none" class="navbar-nav adm">
-					<li class="nav-item"><a class="nav-link"
+					</div>
+			
+				
+					<li class="nav-item adm" style="display: none"><a class="nav-link"
 						href="ListaProdutos.jsf"><img src="imagens/Product_48px.png"></img>Produtos</a>
 					</li>
-				</ul>
-				<ul  style="display: none" class="navbar-nav adm">
-					<li class="nav-item"><a class="nav-link"
+			
+				
+					<li class="nav-item adm" style="display: none"><a class="nav-link"
 						href="ListaClientes.jsf"><img src="imagens/User_48px.png"></img>Clientes</a>
 					</li>
-				</ul>
-				<ul id="opcoes" class="navbar-nav">
-					<li class="nav-item"><a class="nav-link"
-						href="Configuracoes.jsf"><img src="imagens/settings_48px.png"></img>Opções</a>
+					
+					<li class="nav-item logado" style="display: none" onload="#{mBeanS.buscaUsuarioSession()}"><a id="nomeNav"  class="nav-link"
+						href="Perfil.jsf"><img src="imagens/User_48px.png"></img>#{mBeanS.nome}</a>
 					</li>
+					
+					<form jsf:id="formbtn" method="post">
+					<li class="nav-item logado" style="display: none"><a class="nav-link"
+						jsf:action="#{mBeanCliente.sair}"><img src="imagens/Shutdown_48px.png"></img>Sair</a>
+					</li>
+					</form>
 				</ul>
 			</div>
 		</div>
@@ -146,6 +167,9 @@ li:hover .circle {
 	<script src="js/popper.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.mask.min.js"></script>
+	
+	
+	
 	<ui:insert name="scriptdapagina"></ui:insert>
 
 </h:body>
