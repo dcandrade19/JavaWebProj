@@ -16,6 +16,14 @@
 	background-image: url(imagens/bgpizzaria3.jpg);
 }
 
+.titulo {
+	font-size: 16px;
+	font-weight: bold;
+	color: #777;
+	display: inline-block;
+	vertical-align: middle;
+}
+
 .container_principal {
 	width: 100%;
 	height: auto;
@@ -24,6 +32,7 @@
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+	margin-top: 76px;
 }
 
 .div_principal {
@@ -33,8 +42,9 @@
 	background: #8B0000;
 	border-radius: 4px;
 }
+
 .circle {
-    position: absolute;
+	position: absolute;
 	background: #007BFF;
 	border-radius: 50%;
 	width: 24px;
@@ -50,29 +60,74 @@
 	transition: height 0.3s;
 	transition: font-size 0.3s;
 }
+
+.navprincipal {
+	position: fixed;
+	width: 100%;
+	z-index: 22;
+	top: 0;
+	box-sizing: border-box;
+}
+
+.menuresp {
+	transition: 0.3s;
+}
+
+@media screen and (max-width: 990px) {
+	.menuresp {
+		background-color: #fff;
+		border: 8px solid;
+		border-color: #8B0000;
+		border-radius: 4px;
+		position: fixed;
+		top: 74px;
+		right: 0px;
+	}
+}
+
+.BtnMostra {
+	margin-right: 4px;
+	margin-top: 4px;
+	float: right;
+	width: 38px;
+	cursor: pointer;
+}
+
+.div_btnmostra {
+	background: #fff;
+	border-radius: 4px;
+	margin-bottom: 4px;
+	margin-top: 4px;
+}
+
 li {
 	border-style: solid;
 	border-width: 0 0 3px 3px;
 	border-radius: 50%;
+	max-height: 40px;
 	margin: 3px 3px 3px 0;
 	padding: -3px;
-	border-color: rgba(139, 0, 0,.0);
+	border-color: rgba(139, 0, 0, .0);
 	transition: border-color linear 0.6s;
 }
+
 li>a>img {
 	width: 30px;
 }
+
 .active {
-	border-color: rgba(139, 0, 0,1.0);
+	border-color: rgba(139, 0, 0, 1.0);
 }
+
 li:hover {
-	border-color: rgba(139, 0, 0,1.0);
-	
+	border-color: rgba(139, 0, 0, 1.0);
 }
+
 li:hover .circle {
 	height: 24px;
 	font-size: 15px;
 }
+
 .nav-link {
 	padding: 0;
 }
@@ -104,10 +159,10 @@ li:hover .circle {
 
 <h:body class="bg_pagina">
 
-	<nav class="navbar navbar-expand-lg navbar-light "
+	<nav class="navbar navbar-expand-lg navbar-light navprincipal"
 		style="background-color: #8B0000; font-weight: bold;">
 		<div class="navbar navbar-expand-lg"
-			style="background-color: #FFFFFF; border-radius: 5px; width: 100%; height: 60px">
+			style="background-color: #FFFFFF; border-radius: 5px; width: 100%; height: 60px;">
 			<div class="collapse navbar-collapse d-flex justify-content-start">
 				<ul id="inicio" class="navbar-nav">
 					<li class="nav-item active"><a class="nav-link "
@@ -115,42 +170,44 @@ li:hover .circle {
 					</li>
 				</ul>
 			</div>
-			<div class="collapse navbar-collapse d-flex justify-content-end" >
-				<ul  class="navbar-nav" style=" width: auto; white-space: nowrap;">
+			<div class="collapse navbar-collapse d-flex justify-content-end">
+				<ul class="navbar-nav menuresp"
+					style="width: auto; white-space: nowrap;">
 					<li class="nav-item"><a class="nav-link" href="Cardapio.jsf"><img
 							src="imagens/Menu_48px.png"></img>Cardapio</a></li>
-				
-				
-					<li class="nav-item deslogado" style="display: none"><a class="nav-link" href="TelaLogin.jsf"><img
+
+
+					<li class="nav-item deslogado" style="display: none"><a
+						class="nav-link" href="TelaLogin.jsf"><img
 							src="imagens/Enter_48px.png"></img>Entrar</a></li>
-				
-				
-				<div style="position: relative">
-					<li class="nav-item logado" style="display: none"><a class="nav-link "
-						href="TelaPedido.jsf"><img src="imagens/Cart_48px.png"></img>Pedido</a>
-						<div class='circle'>#{mBeanPedido.itens.size()}</div>
-						
-					</li>
+
+
+					<div style="position: relative">
+						<li class="nav-item logado" style="display: none"><a
+							class="nav-link " href="TelaPedido.jsf"><img
+								src="imagens/Cart_48px.png"></img>Pedido</a>
+							<div class='circle'>#{mBeanPedido.itens.size()}</div></li>
 					</div>
-			
-				
-					<li class="nav-item adm" style="display: none"><a class="nav-link"
-						href="ListaProdutos.jsf"><img src="imagens/Product_48px.png"></img>Produtos</a>
-					</li>
-			
-				
-					<li class="nav-item adm" style="display: none"><a class="nav-link"
-						href="ListaClientes.jsf"><img src="imagens/User_48px.png"></img>Clientes</a>
-					</li>
-					
-					<li class="nav-item logado" style="display: none" onload="#{mBeanS.buscaUsuarioSession()}"><a id="nomeNav"  class="nav-link"
-						href="Perfil.jsf"><img src="imagens/User_48px.png"></img>#{mBeanS.nome}</a>
-					</li>
-					
+
+
+					<li class="nav-item adm" style="display: none"><a
+						class="nav-link" href="ListaProdutos.jsf"><img
+							src="imagens/Product_48px.png"></img>Produtos</a></li>
+
+
+					<li class="nav-item adm" style="display: none"><a
+						class="nav-link" href="ListaClientes.jsf"><img
+							src="imagens/User_48px.png"></img>Clientes</a></li>
+
+					<li class="nav-item logado" style="display: none"
+						onload="#{mBeanS.buscaUsuarioSession()}"><a id="nomeNav"
+						class="nav-link" href="Perfil.jsf"><img
+							src="imagens/User_48px.png"></img>#{mBeanS.nome}</a></li>
+
 					<form jsf:id="formbtn" method="post">
-					<li class="nav-item logado" style="display: none"><a class="nav-link"
-						jsf:action="#{mBeanCliente.sair}"><img src="imagens/Shutdown_48px.png"></img>Sair</a>
-					</li>
+						<li class="nav-item logado" style="display: none"><a
+							class="nav-link" jsf:action="#{mBeanCliente.sair}"><img
+								src="imagens/Shutdown_48px.png"></img>Sair</a></li>
 					</form>
 				</ul>
 			</div>
@@ -167,9 +224,6 @@ li:hover .circle {
 	<script src="js/popper.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.mask.min.js"></script>
-	
-	
-	
 	<ui:insert name="scriptdapagina"></ui:insert>
 
 </h:body>

@@ -27,31 +27,48 @@
 </style>
 	</ui:define>
 	<ui:define name="conteudodapagina">
-	<f:event listener="#{mBeanProduto.carregar}" type="preRenderView" /> 
-		<img src="imagens/Menu_48px.png"
-			style="padding-right: 10px; margin-left: 10px"></img>
-		<div class="div_cardapio">
+		<f:event listener="#{mBeanProduto.carregar}" type="preRenderView" />
+		<div class="div_btnmostra">
+			<img src="imagens/Menu_48px.png" style="margin-left: 10px"></img>
+			<h1 class="titulo">Cardápio</h1>
+			<img class="BtnMostra btncardapio" src="imagens/Show_48px.png"
+				style="margin-left: 10px" onmousedown="mostrarCardapio()"></img>
+		</div>
+		<div class="div_cardapio cardapio">
 			<div class="card-columns">
-			<form  jsf:id="form" method="post">
-				<ui:repeat var="pizza" value="#{mBeanProduto.produtos}">
+				<form jsf:id="form" method="post">
+					<ui:repeat var="pizza" value="#{mBeanProduto.produtos}">
 
-					<div class="card">
-						<h:graphicImage class="card-img-top" value="servletImagem?codigo=#{pizza.codigo}"
-							alt="Card image cap"></h:graphicImage>
-						<div class="card-body">
-							<h4 class="card-title">#{pizza.nome}</h4>
-							<p class="card-text" style="font-weight: bold;">#{pizza.tipo}</p>
-							<p class="card-text">#{pizza.descricao}</p>
-							<p class="card-text">R$ #{pizza.preco}</p>
-							<input type="submit" class="btn btn-primary" 
-							jsf:action="#{mBeanPedido.adicionar(pizza.codigo)}" value="Adicionar ao Pedido"></input>
+						<div class="card">
+							<h:graphicImage class="card-img-top"
+								value="servletImagem?codigo=#{pizza.codigo}"
+								alt="Card image cap"></h:graphicImage>
+							<div class="card-body">
+								<h4 class="card-title">#{pizza.nome}</h4>
+								<p class="card-text" style="font-weight: bold;">#{pizza.tipo}</p>
+								<p class="card-text">#{pizza.descricao}</p>
+								<p class="card-text">R$ #{pizza.preco}</p>
+								<input type="submit" class="btn btn-primary"
+									jsf:action="#{mBeanPedido.adicionar(pizza.codigo)}"
+									value="Adicionar ao Pedido"></input>
+							</div>
 						</div>
-					</div>
-				</ui:repeat>
+					</ui:repeat>
 				</form>
 			</div>
 		</div>
-	</ui:define>	
+		<script>
+			function mostrarCardapio() {
+				if ($('.cardapio').css("display") != "none") {
+					$('.cardapio').css("display", "none");
+					$('.btncardapio').attr("src", "imagens/Hide_48px.png");
+				} else {
+					$('.cardapio').css("display", "inherit");
+					$('.btncardapio').attr("src", "imagens/Show_48px.png");
+				}
+			};
+		</script>
+	</ui:define>
 </ui:composition>
 
 

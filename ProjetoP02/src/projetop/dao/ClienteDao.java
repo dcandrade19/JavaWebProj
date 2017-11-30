@@ -9,26 +9,24 @@ import projetop.entity.Cliente;
 
 public class ClienteDao {
 
-	
-	
 	public void inserir(Cliente cliente) {
 		EntityManager em = Conexao.getInstance().createEntityManager();
-		
+
 		em.getTransaction().begin();
 		em.persist(cliente);
 		em.getTransaction().commit();
 		em.close();
 	}
-	
+
 	public Cliente buscar(String cpf) {
 		EntityManager em = Conexao.getInstance().createEntityManager();
 		em.getTransaction().begin();
-		Cliente cliente = em.find(Cliente.class, cpf);		
+		Cliente cliente = em.find(Cliente.class, cpf);
 		em.getTransaction().commit();
 		em.close();
 		return cliente;
-	}	
-	
+	}
+
 	@SuppressWarnings("unchecked")
 	public ArrayList<Cliente> listar() {
 		EntityManager em = Conexao.getInstance().createEntityManager();
@@ -37,19 +35,19 @@ public class ClienteDao {
 		em.close();
 		return list;
 	}
-	
-	public void alterar(Cliente cliente) {	
+
+	public void alterar(Cliente cliente) {
 		EntityManager em = Conexao.getInstance().createEntityManager();
 		em.getTransaction().begin();
 		em.merge(cliente);
 		em.getTransaction().commit();
 		em.close();
 	}
-	
-	public void remover(String cpf) {	
+
+	public void remover(String cpf) {
 		EntityManager em = Conexao.getInstance().createEntityManager();
 		em.getTransaction().begin();
-		Cliente cliente = em.find(Cliente.class, cpf);		
+		Cliente cliente = em.find(Cliente.class, cpf);
 		em.remove(cliente);
 		em.getTransaction().commit();
 		em.close();

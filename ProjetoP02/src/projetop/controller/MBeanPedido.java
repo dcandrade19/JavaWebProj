@@ -17,40 +17,64 @@ import projetop.entity.Item;
 import projetop.entity.Pedido;
 import projetop.entity.Produto;
 
-@ManagedBean (name = "mBeanPedido")
+@ManagedBean(name = "mBeanPedido")
 @SessionScoped
 public class MBeanPedido {
 
 	private String tela;
-	
+
 	private ArrayList<Item> itens = new ArrayList<Item>();
 
+	private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
+
+	private ArrayList<Pedido> pedidosCliente = new ArrayList<Pedido>();
+
 	private BigDecimal total = new BigDecimal(0);
-	
+
 	public String salvarPedido() {
-		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
 		Cliente cliente = (Cliente) req.getSession().getAttribute("cliente");
-		
+
 		Pedido pedido = new Pedido();
 		pedido.setData(new Date());
 		pedido.setItens(itens);
 		pedido.setCliente(cliente);
-		for(Item item : itens) {
+		pedido.setTotal(total);
+		for (Item item : itens) {
 			item.setPedido(pedido);
 		}
-		
+
 		new PedidoDao().inserir(pedido);
-		
+		itens.clear();
+		total = BigDecimal.ZERO;
+		pedidos.add(pedido);
+
 		return "Perfil.jsf";
 	}
-	
+
+	public void separarPedido() {
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
+		Cliente cliente = (Cliente) req.getSession().getAttribute("cliente");
+
+		pedidos = new PedidoDao().listar();
+		pedidosCliente.clear();
+		for (Pedido pedido : pedidos) {
+			if (pedido.getCliente().getCpf().equals(cliente.getCpf())) {
+				pedidosCliente.add(pedido);
+			}
+		}
+
+	}
+
 	public void adicionar(Integer codigo) throws IOException {
-		
+
 		Produto produto = new ProdutoDao().buscar(codigo);
-		
+
 		Item item = buscarProduto(produto);
-		
-		if(item == null) {
+
+		if (item == null) {
 			item = new Item();
 			item.setProduto(produto);
 			item.setQuantidade(1);
@@ -60,55 +84,52 @@ public class MBeanPedido {
 			item.setQuantidade(item.getQuantidade() + 1);
 			item.setTotal(calcularCusto(item));
 		}
-		
+
 		// adicionando o preco do produto ao preco total
-		total =	total.add(item.getProduto().getPreco());
+		total = total.add(item.getProduto().getPreco());
 
-		
 	}
-
-	
 
 	public Item buscarProduto(Produto produto) {
-		
-		for(Item item : itens) {
-			if(item.getProduto().getCodigo() == produto.getCodigo()) {
+
+		for (Item item : itens) {
+			if (item.getProduto().getCodigo() == produto.getCodigo()) {
 				return item;
-			} 
+			}
 		}
-		
+
 		return null;
 	}
-	
+
 	public BigDecimal calcularCusto(Item item) {
-		
+
 		BigDecimal custo = item.getProduto().getPreco().multiply(new BigDecimal(item.getQuantidade()));
 
 		return custo;
 	}
-	
-	
+
 	public void alterarTela() {
-		
-		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
 		Cliente cliente = (Cliente) req.getSession().getAttribute("cliente");
-		
-		if(cliente == null) {
+
+		if (cliente == null) {
 			tela = "deslogado";
-		} else if(cliente.getCpf().equals("000.000.000-00")){
+		} else if (cliente.getCpf().equals("000.000.000-00")) {
 			tela = "adm";
 		} else {
 			tela = "logado";
 		}
 	}
-	
+
 	public void remover(Item item) {
-		
+
 		itens.remove(item);
 		// subtraindo o preco do produto do preco total
 		total = total.subtract(item.getTotal());
 	}
-	
+
 	public ArrayList<Item> getItens() {
 		return itens;
 	}
@@ -117,25 +138,36 @@ public class MBeanPedido {
 		this.itens = itens;
 	}
 
-
 	public BigDecimal getTotal() {
 		return total;
 	}
-
 
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
 
-
 	public String getTela() {
 		return tela;
 	}
-
 
 	public void setTela(String tela) {
 		this.tela = tela;
 	}
 
-	
+	public ArrayList<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(ArrayList<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+	public ArrayList<Pedido> getPedidosCliente() {
+		return pedidosCliente;
+	}
+
+	public void setPedidosCliente(ArrayList<Pedido> pedidosCliente) {
+		this.pedidosCliente = pedidosCliente;
+	}
+
 }

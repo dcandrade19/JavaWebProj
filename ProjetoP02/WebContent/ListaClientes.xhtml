@@ -15,6 +15,7 @@
 	box-sizing: border-box;
 	overflow: auto;
 }
+
 .table {
 	margin: 0;
 	text-align: left;
@@ -23,32 +24,40 @@
 </style>
 	</ui:define>
 	<ui:define name="conteudodapagina">
-		<img src="imagens/User_48px.png"
-			style="padding-right: 10px; margin-left: 10px"></img>
 
-		<div class="div_cardapio">
+		<div class="div_btnmostra">
+			<img src="imagens/User_48px.png" style="margin-left: 10px"></img>
+			<h1 class="titulo">Clientes</h1>
+			<img class="BtnMostra btnclientes" src="imagens/Show_48px.png"
+				style="margin-left: 10px" onmousedown="mostrarClientes()"></img>
+		</div>
+		<div class="div_cardapio clientes">
 			<form jsf:id="formList" method="post" enctype="multipart/form-data">
 
 				<button class="btn btn-primary my-2 my-sm-0" type="submit"
 					id="btnCarregar" jsf:action="#{mBeanCliente.carregar()}">Atualizar</button>
 				<button class="btn btn-primary my-2 my-sm-0" type="submit"
-					id="btnBuscar" jsf:action="#{mBeanCliente.buscar()}" style="float: right" onclick="busca()">Buscar</button>
-				<input id="cpf" style="margin-right: 5px; max-width: 200px; float: right"
+					id="btnBuscar" jsf:action="#{mBeanCliente.buscar()}"
+					style="float: right" onclick="busca()">Buscar</button>
+				<input id="cpf"
+					style="margin-right: 5px; max-width: 200px; float: right"
 					class="form-control" type="search" placeholder="Informe o CPF"
 					aria-label="Search" jsf:value="#{mBeanCliente.cpf}"></input>
 
-			<ui:repeat var="cliente" value="#{mBeanCliente.clientes}" varStatus="id">
-				<table class="table table-striped table-dark" style="width: 100%; border: 8px solid #fff; ">
-					<thead class="thead-dark">
-						<th scope="col">CPF</th>
-						<th scope="col">Nome</th>
-						<th scope="col">Telefone</th>
-						<th scope="col">Celular</th>
-						<th scope="col">Nascimento</th>
-						<th scope="col">Email</th>
-						<th scope="col">Senha</th>
-					</thead>
-					<tbody>
+				<ui:repeat var="cliente" value="#{mBeanCliente.clientes}"
+					varStatus="id">
+					<table class="table table-striped table-dark"
+						style="width: 100%; border: 8px solid #fff;">
+						<thead class="thead-dark">
+							<th scope="col">CPF</th>
+							<th scope="col">Nome</th>
+							<th scope="col">Telefone</th>
+							<th scope="col">Celular</th>
+							<th scope="col">Nascimento</th>
+							<th scope="col">Email</th>
+							<th scope="col">Senha</th>
+						</thead>
+						<tbody>
 							<td>#{cliente.cpf}</td>
 							<td>#{cliente.nome}</td>
 							<td>#{cliente.telefone}</td>
@@ -56,17 +65,17 @@
 							<td>#{cliente.nascimento}</td>
 							<td>#{cliente.email}</td>
 							<td><p class="senha">#{cliente.senha}</p></td>
-					</tbody>
-					<thead class="thead-dark">
-						<th scope="col">Endereço</th>
-						<th scope="col">Complemento</th>
-						<th scope="col">Cidade</th>
-						<th scope="col">Estado</th>
-						<th scope="col">CEP</th>
-						<th scope="col">Status</th>
-						<th></th>	
-					</thead>
-					<tbody>
+						</tbody>
+						<thead class="thead-dark">
+							<th scope="col">Endereço</th>
+							<th scope="col">Complemento</th>
+							<th scope="col">Cidade</th>
+							<th scope="col">Estado</th>
+							<th scope="col">CEP</th>
+							<th scope="col">Status</th>
+							<th></th>
+						</thead>
+						<tbody>
 							<td>#{cliente.rua}</td>
 							<td>#{cliente.complemento}</td>
 							<td>#{cliente.cidade}</td>
@@ -74,19 +83,20 @@
 							<td>#{cliente.cep}</td>
 							<td>#{cliente.status}</td>
 							<td></td>
-					</tbody>			
-				</table>
-				<td><input class="btn btn-danger" type="submit"
-									id="btnAtivarDesativar" jsf:action="#{mBeanCliente.ativar_desativar(cliente)}"
-									style="margin-right: 5px; float: right" value="Ativar/Desativar"></input>
-							
-							    <button class="btn btn-danger" type="submit"
-									id="btnExcluir2" jsf:action="#{mBeanCliente.excluir(cliente)}"
-									style="margin-right: 5px; float: right">Excluir</button>
+						</tbody>
+					</table>
+					<td><input class="btn btn-danger" type="submit"
+						id="btnAtivarDesativar"
+						jsf:action="#{mBeanCliente.ativar_desativar(cliente)}"
+						style="margin-right: 5px; float: right" value="Ativar/Desativar"></input>
 
-								<button class="btn btn-primary" type="submit" id="btnEditar2"
-									style="margin-right: 5px; float: right"
-									jsf:action="#{mBeanCliente.alterar(cliente)}">Editar</button></td>
+						<button class="btn btn-danger" type="submit" id="btnExcluir2"
+							jsf:action="#{mBeanCliente.excluir(cliente)}"
+							style="margin-right: 5px; float: right">Excluir</button>
+
+						<button class="btn btn-primary" type="submit" id="btnEditar2"
+							style="margin-right: 5px; float: right"
+							jsf:action="#{mBeanCliente.alterar(cliente)}">Editar</button></td>
 				</ui:repeat>
 			</form>
 
@@ -97,9 +107,20 @@
 	</ui:define>
 	<ui:define name="scriptdapagina">
 		<script>
-		$(document).ready(function esconder() {
-			$('.senha').mask('********');
-		});
+			$(document).ready(function esconder() {
+				$('.senha').mask('********');
+			});
+		</script>
+		<script>
+			function mostrarClientes() {
+				if ($('.clientes').css("display") != "none") {
+					$('.clientes').css("display", "none");
+					$('.btnclientes').attr("src", "imagens/Hide_48px.png");
+				} else {
+					$('.clientes').css("display", "inherit");
+					$('.btnclientes').attr("src", "imagens/Show_48px.png");
+				}
+			};
 		</script>
 		<script src="js/script-teste.js"></script>
 

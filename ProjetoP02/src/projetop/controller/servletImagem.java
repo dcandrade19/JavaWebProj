@@ -19,33 +19,37 @@ import projetop.entity.Produto;
 public class servletImagem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private FileInputStream fis;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public servletImagem() {
-        super();
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public servletImagem() {
+		super();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String codigo = request.getParameter("codigo");
 		Produto produto = new ProdutoDao().buscar(Integer.parseInt(codigo));
-		
+
 		File f = new File(produto.getFoto());
 		fis = new FileInputStream(f);
-		byte [] arrayImagem = new byte[(int)f.length()];
+		byte[] arrayImagem = new byte[(int) f.length()];
 		fis.read(arrayImagem);
-		
+
 		response.getOutputStream().write(arrayImagem);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

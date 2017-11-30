@@ -21,10 +21,13 @@
 	</ui:define>
 	<ui:define name="conteudodapagina">
 		<form jsf:id="form" method="post">
-			<img src="imagens/Cart_48px.png"
-				style="padding-right: 10px; margin-left: 10px"></img>
+			<div class="div_btnmostra">
+				<img src="imagens/Cart_48px.png" style="margin-left: 10px"></img>
+				<h1 class="titulo">Pedido</h1>
+			</div>
 			<div class="div_cardapio">
-				<table class="table table-striped table-dark" style="border: 8px solid #fff; width: 99%">
+				<table class="table table-striped table-dark"
+					style="border: 8px solid #fff; width: 99%">
 					<thead class="thead-dark">
 						<tr>
 							<th scope="col">#</th>
@@ -69,8 +72,5 @@
 			</div>
 		</form>
 	</ui:define>
-
 </ui:composition>
-
-
 </html>

@@ -17,12 +17,16 @@
 </style>
 	</ui:define>
 	<ui:define name="conteudodapagina">
-		<img src="imagens/Product_48px.png"
-			style="padding-right: 10px; margin-left: 10px"></img>
 
-		<div class="div_cardapio">
-			<form id="formularioProduto" jsf:id="form" method="post" onsubmit="alertar(1)"
-				enctype="multipart/form-data">
+		<div class="div_btnmostra">
+			<img src="imagens/Product_48px.png" style="margin-left: 10px"></img>
+			<h1 class="titulo">Cadastro de Produto</h1>
+			<img class="BtnMostra btncadastro" src="imagens/Show_48px.png"
+				style="margin-left: 10px" onmousedown="mostrarCadastro()"></img>
+		</div>
+		<div class="div_cardapio cadastro">
+			<form id="formularioProduto" jsf:id="form" method="post"
+				onsubmit="alertar(1)" enctype="multipart/form-data">
 				<div class="form-row">
 					<div class="form-group col-md-1 ">
 						<label for="codd">Codigo</label> <input type="text"
@@ -78,20 +82,27 @@
 						</div>
 					</div>
 				</div>
-				
-				<div id="alerta" style="display: none;" class="alert alert-success" role="alert">
-					 <a>Produto: <strong> #{mBeanProduto.nome} </strong> Salvo!</a>
+
+				<div id="alerta" style="display: none;" class="alert alert-success"
+					role="alert">
+					<a>Produto: <strong> #{mBeanProduto.nome} </strong> Salvo!
+					</a>
 				</div>
 				<button id="btnSalvar" type="submit" class="btn btn-primary"
 					jsf:action="#{mBeanProduto.salvar}" style="margin-right: 5px">Salvar</button>
-				<button type="reset" class="btn btn-danger" style="margin-right: 5px" >Cancelar</button>
+				<button type="reset" class="btn btn-danger"
+					style="margin-right: 5px">Cancelar</button>
 			</form>
 		</div>
 
-		<img src="imagens/List_48px.png"
-			style="padding-right: 10px; margin-left: 10px"></img>
 
-		<div class="div_cardapio">
+		<div class="div_btnmostra">
+			<img src="imagens/List_48px.png" style="margin-left: 10px"></img>
+			<h1 class="titulo">Produtos</h1>
+			<img class="BtnMostra btnprodutos" src="imagens/Show_48px.png"
+				style="margin-left: 10px" onmousedown="mostrarProdutos()"></img>
+		</div>
+		<div class="div_cardapio produtos">
 			<form jsf:id="formList" method="post" enctype="multipart/form-data">
 
 
@@ -106,7 +117,8 @@
 							id="btnBuscar" jsf:action="#{mBeanProduto.buscar()}">Buscar</button>
 					</div>
 				</div>
-				<table class="table table-striped table-dark" style="border: 8px solid #fff; width: 100%; white-space: nowrap;">
+				<table class="table table-striped table-dark"
+					style="border: 8px solid #fff; width: 100%; white-space: nowrap;">
 					<tr>
 						<th scope="col">#</th>
 						<th scope="col">Nome</th>
@@ -123,8 +135,10 @@
 						<tr>
 							<th scope="row" id="codi">#{produto.codigo}</th>
 							<td style="max-width: 180px; overflow: auto;">#{produto.nome}</td>
-							<td style="max-width: 220px; overflow: hidden; text-overflow: ellipsis;">#{produto.foto}</td>
-							<td style="min-width: 220px; overflow: hidden; text-overflow: ellipsis;">#{produto.descricao}</td>
+							<td
+								style="max-width: 220px; overflow: hidden; text-overflow: ellipsis;">#{produto.foto}</td>
+							<td
+								style="min-width: 220px; overflow: hidden; text-overflow: ellipsis;">#{produto.descricao}</td>
 							<td>#{produto.tamanho}</td>
 							<td>#{produto.tipo}</td>
 							<td>#{produto.preco}</td>
@@ -153,6 +167,26 @@
 			$('#moeda').mask('000.000.000,00', {
 				reverse : true
 			});
+		</script>
+		<script>
+			function mostrarCadastro() {
+				if ($('.cadastro').css("display") != "none") {
+					$('.cadastro').css("display", "none");
+					$('.btncadastro').attr("src", "imagens/Hide_48px.png");
+				} else {
+					$('.cadastro').css("display", "inherit");
+					$('.btncadastro').attr("src", "imagens/Show_48px.png");
+				}
+			};
+			function mostrarProdutos() {
+				if ($('.produtos').css("display") != "none") {
+					$('.produtos').css("display", "none");
+					$('.btnprodutos').attr("src", "imagens/Hide_48px.png");
+				} else {
+					$('.produtos').css("display", "inherit");
+					$('.btnprodutos').attr("src", "imagens/Show_48px.png");
+				}
+			}
 		</script>
 		<script src="js/script-teste.js"></script>
 

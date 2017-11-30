@@ -41,18 +41,18 @@ public class MBeanCliente {
 
 	public void setAdm() {
 
-			if(new ClienteDao().buscar("000.000.000-00") == null) {
-				Cliente cliente = new Cliente();
-				cliente.setCpf("000.000.000-00");
-				cliente.setNome("Adm");
-				cliente.setSenha("admin");
-				new ClienteDao().inserir(cliente);
-				System.out.println("Conta ADM criada.");
-			} else {
-				System.out.println("Conta ADM localizada.");
-			}
+		if (new ClienteDao().buscar("000.000.000-00") == null) {
+			Cliente cliente = new Cliente();
+			cliente.setCpf("000.000.000-00");
+			cliente.setNome("Adm");
+			cliente.setSenha("admin");
+			new ClienteDao().inserir(cliente);
+			System.out.println("Conta ADM criada.");
+		} else {
+			System.out.println("Conta ADM localizada.");
+		}
 	}
-	
+
 	public void salvar() {
 		Cliente cliente = new Cliente();
 
@@ -83,12 +83,12 @@ public class MBeanCliente {
 		System.out.println(cliente.toString());
 	}
 
-		public void carregar() {
-		
+	public void carregar() {
+
 		clientes = new ClienteDao().listar();
-		
+
 	}
-	
+
 	public String alterar(Cliente cliente) {
 		this.cpf = cliente.getCpf();
 		this.nome = cliente.getNome();
@@ -103,12 +103,12 @@ public class MBeanCliente {
 		this.estado = cliente.getEstado();
 		this.cep = cliente.getCep();
 		this.status = cliente.getStatus();
-		
+
 		return "CadastroCliente.jsf";
 	}
 
 	public void ativar_desativar(Cliente cliente) {
-		if(cliente.getStatus()) {
+		if (cliente.getStatus()) {
 			cliente.setStatus(false);
 			new ClienteDao().alterar(cliente);
 		} else {
@@ -116,7 +116,7 @@ public class MBeanCliente {
 			new ClienteDao().alterar(cliente);
 		}
 	}
-	
+
 	public void excluir(Cliente cliente) {
 		new ClienteDao().remover(cliente.getCpf());
 		clientes = new ClienteDao().listar();
@@ -132,72 +132,65 @@ public class MBeanCliente {
 			setResultadoBusca(cliente);
 			if (cliente != null) {
 				System.out.println("Resultado da busca: " + cliente);
-				
-						this.cpf = cliente.getCpf();
-						this.nome = cliente.getNome();
-						this.telefone = cliente.getTelefone();
-						this.celular = cliente.getCelular();
-						this.nascimento = cliente.getNascimento();
-						this.email = cliente.getEmail();
-						this.senha = cliente.getSenha();
-						this.rua = cliente.getRua();
-						this.complemento = cliente.getComplemento();
-						this.cidade = cliente.getCidade();
-						this.estado = cliente.getEstado();
-						this.cep = cliente.getCep();
-						this.status = cliente.getStatus();
-					} else {
-						System.out.println("CPF: " + cpf + " não localizado!");
-					}
+
+				this.cpf = cliente.getCpf();
+				this.nome = cliente.getNome();
+				this.telefone = cliente.getTelefone();
+				this.celular = cliente.getCelular();
+				this.nascimento = cliente.getNascimento();
+				this.email = cliente.getEmail();
+				this.senha = cliente.getSenha();
+				this.rua = cliente.getRua();
+				this.complemento = cliente.getComplemento();
+				this.cidade = cliente.getCidade();
+				this.estado = cliente.getEstado();
+				this.cep = cliente.getCep();
+				this.status = cliente.getStatus();
+			} else {
+				System.out.println("CPF: " + cpf + " não localizado!");
+			}
 		} else {
 			System.out.println("CPF Invalido!");
 		}
 	}
-		
+
 	public String entrar(String senha) {
 		if (cpf != null) {
 			Cliente cliente = new ClienteDao().buscar(cpf);
-			if(cliente != null) {
-				if(cliente.getSenha().equals(senha)) {
+			if (cliente != null) {
+				if (cliente.getSenha().equals(senha)) {
 					System.out.println("Entrando como: " + cliente.getNome() + ".");
-					//capture o objeto de request
-					//nele é possível recuperar a sessão		
-					HttpServletRequest req = (HttpServletRequest) 
-							FacesContext.getCurrentInstance().
-							getExternalContext().getRequest();
-					//adiciono na sessão o usuário que fez o login
+					// capture o objeto de request
+					// nele é possível recuperar a sessão
+					HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+							.getRequest();
+					// adiciono na sessão o usuário que fez o login
 					req.getSession().setAttribute("cliente", cliente);
 
-					//redireciono para tela que ele estava tentando acessar
-			return ""+req.getSession().getAttribute("pagina");
+					// redireciono para tela que ele estava tentando acessar
+					return "" + req.getSession().getAttribute("pagina");
 				} else {
-					FacesContext.getCurrentInstance().
-					addMessage("", 
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-						"Login ou senha inválidos!", ""));
+					FacesContext.getCurrentInstance().addMessage("",
+							new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login ou senha inválidos!", ""));
 					return "";
 				}
-			} 
+			}
 		}
-		FacesContext.getCurrentInstance().
-		addMessage("", 
-	new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-			"Dados inválidos!", ""));
+		FacesContext.getCurrentInstance().addMessage("",
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Dados inválidos!", ""));
 		return "";
 	}
-	
+
 	public String sair() {
-		
-		HttpServletRequest req = (HttpServletRequest) 
-				FacesContext.getCurrentInstance().
-				getExternalContext().getRequest();
-		
+
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
+
 		req.getSession().setAttribute("cliente", null);
-		
+
 		return "index.jsf";
 	}
 
-	
 	public ArrayList<Cliente> getClientes() {
 		return clientes;
 	}

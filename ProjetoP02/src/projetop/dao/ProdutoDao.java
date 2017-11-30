@@ -9,26 +9,24 @@ import projetop.entity.Produto;
 
 public class ProdutoDao {
 
-	
-	
 	public void inserir(Produto produto) {
 		EntityManager em = Conexao.getInstance().createEntityManager();
-		
+
 		em.getTransaction().begin();
 		em.persist(produto);
 		em.getTransaction().commit();
 		em.close();
 	}
-	
+
 	public Produto buscar(Integer codigo) {
 		EntityManager em = Conexao.getInstance().createEntityManager();
 		em.getTransaction().begin();
-		Produto produto = em.find(Produto.class, codigo);		
+		Produto produto = em.find(Produto.class, codigo);
 		em.getTransaction().commit();
 		em.close();
 		return produto;
-	}	
-	
+	}
+
 	@SuppressWarnings("unchecked")
 	public ArrayList<Produto> listar() {
 		EntityManager em = Conexao.getInstance().createEntityManager();
@@ -37,19 +35,19 @@ public class ProdutoDao {
 		em.close();
 		return list;
 	}
-	
-	public void alterar(Produto produto) {	
+
+	public void alterar(Produto produto) {
 		EntityManager em = Conexao.getInstance().createEntityManager();
 		em.getTransaction().begin();
 		em.merge(produto);
 		em.getTransaction().commit();
 		em.close();
 	}
-	
-	public void remover(Integer integer) {	
+
+	public void remover(Integer integer) {
 		EntityManager em = Conexao.getInstance().createEntityManager();
 		em.getTransaction().begin();
-		Produto produto = em.find(Produto.class, integer);		
+		Produto produto = em.find(Produto.class, integer);
 		em.remove(produto);
 		em.getTransaction().commit();
 		em.close();

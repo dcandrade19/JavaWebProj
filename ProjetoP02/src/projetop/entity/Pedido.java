@@ -1,5 +1,6 @@
 package projetop.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class Pedido {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer codigo;
 	private Date data;
+	private BigDecimal total;
 	
 	@ManyToOne
 	private Cliente cliente;
@@ -56,6 +58,14 @@ public class Pedido {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
 	}
 	
 	
