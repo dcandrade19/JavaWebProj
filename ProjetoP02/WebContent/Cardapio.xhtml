@@ -11,23 +11,21 @@
 .div_cardapio {
 	background-color: #8B0000;
 	box-sizing: content-box;
-}
-
-.card {
-	max-width: 80%;
-	margin: 10px
+	margin: 0px;
 }
 
 .card-columns {
-	display: inline-block;
+	display: block;
 	max-width: 100%;
 	column-count: 4;
 	column-gap: 8px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 </style>
 	</ui:define>
 	<ui:define name="conteudodapagina">
-		<f:event listener="#{mBeanProduto.carregar}" type="preRenderView" />
+		<a onload="#{mBeanProduto.carregar()}" />
 		<div class="div_btnmostra">
 			<img src="imagens/Menu_48px.png" style="margin-left: 10px"></img>
 			<h1 class="titulo">Cardápio</h1>
@@ -35,14 +33,16 @@
 				style="margin-left: 10px" onmousedown="mostrarCardapio()"></img>
 		</div>
 		<div class="div_cardapio cardapio">
+			<h:messages styleClass="alert alert-success"
+				style="margin:5px 0 5px 0"></h:messages>
+
 			<div class="card-columns">
 				<form jsf:id="form" method="post">
 					<ui:repeat var="pizza" value="#{mBeanProduto.produtos}">
 
 						<div class="card">
 							<h:graphicImage class="card-img-top"
-								value="servletImagem?codigo=#{pizza.codigo}"
-								alt="Card image cap"></h:graphicImage>
+								value="servletImagem?codigo=#{pizza.codigo}" alt="Foto"></h:graphicImage>
 							<div class="card-body">
 								<h4 class="card-title">#{pizza.nome}</h4>
 								<p class="card-text" style="font-weight: bold;">#{pizza.tipo}</p>
@@ -50,7 +50,8 @@
 								<p class="card-text">R$ #{pizza.preco}</p>
 								<input type="submit" class="btn btn-primary"
 									jsf:action="#{mBeanPedido.adicionar(pizza.codigo)}"
-									value="Adicionar ao Pedido"></input>
+									value="Adicionar ao Pedido"
+									onclick="if(!confirm('Adicionar #{pizza.nome}?')) {return false;}"></input>
 							</div>
 						</div>
 					</ui:repeat>

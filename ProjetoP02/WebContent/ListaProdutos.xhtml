@@ -83,13 +83,11 @@
 					</div>
 				</div>
 
-				<div id="alerta" style="display: none;" class="alert alert-success"
-					role="alert">
-					<a>Produto: <strong> #{mBeanProduto.nome} </strong> Salvo!
-					</a>
-				</div>
+				<h:messages styleClass="alert alert-success"
+					style="margin:5px 0 0 0"></h:messages>
 				<button id="btnSalvar" type="submit" class="btn btn-primary"
-					jsf:action="#{mBeanProduto.salvar}" style="margin-right: 5px">Salvar</button>
+					jsf:action="#{mBeanProduto.salvar}" style="margin-right: 5px"
+					onclick="if(!confirm('Deseja salvar o produto?')) {return false;}">Salvar</button>
 				<button type="reset" class="btn btn-danger"
 					style="margin-right: 5px">Cancelar</button>
 			</form>
@@ -111,12 +109,14 @@
 						id="btnCarregar" jsf:action="#{mBeanProduto.carregar()}">Atualizar</button>
 					<div>
 						<input id="busca" style="margin-right: 5px" class="form-control"
-							type="search" placeholder="Informe o Codigo" aria-label="Search"
+							type="search" placeholder="0000" aria-label="Search"
 							jsf:value="#{mBeanProduto.codigo}"></input>
 						<button class="btn btn-primary my-2 my-sm-0" type="submit"
 							id="btnBuscar" jsf:action="#{mBeanProduto.buscar()}">Buscar</button>
 					</div>
 				</div>
+				<h:messages styleClass="alert alert-success"
+					style="margin:5px 0 0 0"></h:messages>
 				<table class="table table-striped table-dark"
 					style="border: 8px solid #fff; width: 100%; white-space: nowrap;">
 					<tr>
@@ -144,11 +144,13 @@
 							<td>#{produto.preco}</td>
 							<td><button class="btn btn-danger" type="submit"
 									id="btnExcluir2" jsf:action="#{mBeanProduto.excluir(produto)}"
-									style="margin-right: 5px">Excluir</button>
+									style="margin-right: 5px"
+									onclick="if(!confirm('Deseja excluir o produto: #{produto.nome} ?')) {return false;}">Excluir</button>
 
 								<button class="btn btn-primary" type="submit" id="btnEditar2"
 									style="margin-right: 5px"
-									jsf:action="#{mBeanProduto.alterar(produto)}">Editar</button></td>
+									jsf:action="#{mBeanProduto.alterar(produto)}"
+									onclick="if(!confirm('Deseja editar o produto: #{produto.nome} ?')) {return false;}">Editar</button></td>
 						</tr>
 
 					</ui:repeat>

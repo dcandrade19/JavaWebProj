@@ -15,7 +15,6 @@ public class ProdutoDao {
 		em.getTransaction().begin();
 		em.persist(produto);
 		em.getTransaction().commit();
-		em.close();
 	}
 
 	public Produto buscar(Integer codigo) {
@@ -32,7 +31,6 @@ public class ProdutoDao {
 		EntityManager em = Conexao.getInstance().createEntityManager();
 		Query q = em.createQuery("from Produto");
 		ArrayList<Produto> list = new ArrayList<Produto>(q.getResultList());
-		em.close();
 		return list;
 	}
 
@@ -41,7 +39,6 @@ public class ProdutoDao {
 		em.getTransaction().begin();
 		em.merge(produto);
 		em.getTransaction().commit();
-		em.close();
 	}
 
 	public void remover(Integer integer) {
@@ -50,6 +47,5 @@ public class ProdutoDao {
 		Produto produto = em.find(Produto.class, integer);
 		em.remove(produto);
 		em.getTransaction().commit();
-		em.close();
 	}
 }

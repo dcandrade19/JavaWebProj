@@ -50,7 +50,8 @@
 									<div class="d-flex justify-content-end">
 										<input class="btn btn-danger" style="margin-right: 8px"
 											type="submit" value="Remover"
-											jsf:action="#{mBeanPedido.remover(item)}"></input>
+											jsf:action="#{mBeanPedido.remover(item)}"
+											onclick="if(!confirm('Deseja remover o produto: #{item.produto.nome}?')) {return false;}"></input>
 									</div>
 								</td>
 							</tr>
@@ -66,8 +67,9 @@
 				<div class="d-flex justify-content-end" style="padding: 10px">
 					<input class="btn btn-primary" style="margin-right: 8px;"
 						type="submit" value="Finalizar Pedido"
-						jsf:action="#{mBeanPedido.salvarPedido()}"></input> <a
-						href="Cardapio.jsf" class="btn btn-danger">Voltar</a>
+						jsf:action="#{mBeanPedido.salvarPedido()}"
+						onclick="if(!confirm('Deseja finalizar o pedido?')) {return false;}"></input>
+					<a href="Cardapio.jsf" class="btn btn-danger">Voltar</a>
 				</div>
 			</div>
 		</form>

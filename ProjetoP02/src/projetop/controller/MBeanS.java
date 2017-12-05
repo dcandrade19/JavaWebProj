@@ -8,6 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import projetop.entity.Cliente;
 
+/**
+ * Bean especial para informações do usuario atual
+ * e para evitar conflito com o bean de cliente
+ * @author Diego
+ *
+ */
 @ManagedBean(name = "mBeanS")
 public class MBeanS {
 
@@ -25,6 +31,9 @@ public class MBeanS {
 	private String cep;
 	private Boolean status;
 
+	/**
+	 * Busca o usuario atual da sessão
+	 */
 	public void buscaUsuarioSession() {
 		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
@@ -47,6 +56,7 @@ public class MBeanS {
 		}
 	}
 
+	// Getters and Setters
 	public String getCpf() {
 		return cpf;
 	}

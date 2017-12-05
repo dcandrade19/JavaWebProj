@@ -111,8 +111,11 @@
 						</div>
 					</div>
 				</div>
+				<h:messages styleClass="alert alert-success"
+					style="margin:5px 0 0 0"></h:messages>
 				<button type="submit" class="btn btn-primary"
-					jsf:action="#{mBeanCliente.salvar}">Cadastrar</button>
+					jsf:action="#{mBeanCliente.salvar}"
+					onclick="if(!confirm('Finalizar o cadastro?')) {return false;}">Cadastrar</button>
 				<button type="reset" class="btn btn-danger"
 					style="margin-right: 5px">Cancelar</button>
 			</form>

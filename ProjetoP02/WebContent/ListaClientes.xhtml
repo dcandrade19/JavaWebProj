@@ -25,6 +25,113 @@
 	</ui:define>
 	<ui:define name="conteudodapagina">
 
+
+		<div class="div_btnmostra">
+			<img src="imagens/Registration_48px.png" style="margin-left: 10px"></img>
+			<h1 class="titulo">Cadastro de Cliente</h1>
+			<img class="BtnMostra btncadastro" src="imagens/Show_48px.png"
+				style="margin-left: 10px" onmousedown="mostrarCadastro()"></img>
+		</div>
+		<div class="div_cardapio cadastro">
+			<form jsf:id="form" method="post">
+				<div class="form-row">
+					<div class="form-group col-md-2">
+						<label for="cpf">CPF</label> <input type="text"
+							class="form-control cpf" id="cpf" placeholder="000.000.000-00"
+							required="required" jsf:value="#{mBeanCliente.cpf}"></input>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="nome">Nome</label> <input type="text"
+							class="form-control" id="nome" placeholder="Nome"
+							required="required" jsf:value="#{mBeanCliente.nome}"></input>
+					</div>
+					<div class="form-group col-md-2">
+						<label for="telefone">Telefone</label> <input type="text"
+							class="form-control" id="telefone" placeholder="(00)0000-0000"
+							jsf:value="#{mBeanCliente.telefone}"></input>
+					</div>
+					<div class="form-group col-md-2">
+						<label for="celular">Celular</label> <input type="text"
+							class="form-control" id="celular" placeholder="(00)00000-0000"
+							jsf:value="#{mBeanCliente.celular}"></input>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="data">Nascimento</label> <input type="date"
+							class="form-control" id="data" placeholder="dd/MM/aaaa"
+							required="required" jsf:value="#{mBeanCliente.nascimento}">
+						<f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT-3"></f:convertDateTime>
+						</input>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="email">Email</label> <input type="email"
+							class="form-control" id="email" placeholder="exemplo@email.com"
+							required="required" jsf:value="#{mBeanCliente.email}"></input>
+					</div>
+					<div class="form-group col-md-2">
+						<label for="senha">Senha</label> <input type="password"
+							class="form-control" id="senha" placeholder="Senha"
+							required="required" jsf:value="#{mBeanCliente.senha}"></input>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label for="rua">Rua</label> <input type="text"
+							class="form-control" id="rua"
+							placeholder="Rua Francisco Rocha nº 35" required="required"
+							jsf:value="#{mBeanCliente.rua}"></input>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label for="complemento">Complemento</label> <input type="text"
+							class="form-control" id="complemento" placeholder="Casa 04"
+							jsf:value="#{mBeanCliente.complemento}"></input>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="cidade">Cidade</label>
+						<h:selectOneMenu class="form-control" id="cidade"
+							value="#{mBeanCliente.cidade}">
+							<f:selectItem itemValue="Curitiba" itemLabel="Curitiba" />
+						</h:selectOneMenu>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="estado">Estado</label>
+						<h:selectOneMenu class="form-control" id="estado"
+							value="#{mBeanCliente.estado}">
+							<f:selectItem itemValue="Paraná" itemLabel="Paraná" />
+						</h:selectOneMenu>
+					</div>
+					<div class="form-group col-md-2">
+						<label for="cep">CEP</label> <input type="text"
+							class="form-control" id="cep" jsf:value="#{mBeanCliente.cep}"></input>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<div class="form-check">
+							<label class="form-check-label"> <input
+								class="form-check-input" type="checkbox" required="required"
+								jsf:value="#{mBeanCliente.status}"></input> Li e Concordo com os
+								Termos de Serviço.
+							</label>
+						</div>
+					</div>
+				</div>
+				<h:messages styleClass="alert alert-success"
+					style="margin:5px 0 0 0"></h:messages>
+				<button type="submit" class="btn btn-primary"
+					jsf:action="#{mBeanCliente.salvar}"
+					onclick="if(!confirm('Finalizar o cadastro?')) {return false;}">Cadastrar</button>
+				<button type="reset" class="btn btn-danger"
+					style="margin-right: 5px">Cancelar</button>
+			</form>
+		</div>
+
+
 		<div class="div_btnmostra">
 			<img src="imagens/User_48px.png" style="margin-left: 10px"></img>
 			<h1 class="titulo">Clientes</h1>
@@ -41,9 +148,10 @@
 					style="float: right" onclick="busca()">Buscar</button>
 				<input id="cpf"
 					style="margin-right: 5px; max-width: 200px; float: right"
-					class="form-control" type="search" placeholder="Informe o CPF"
+					class="form-control cpf" type="search" placeholder="000.000.000-00"
 					aria-label="Search" jsf:value="#{mBeanCliente.cpf}"></input>
-
+				<h:messages styleClass="alert alert-success"
+					style="margin:5px 0 0 0"></h:messages>
 				<ui:repeat var="cliente" value="#{mBeanCliente.clientes}"
 					varStatus="id">
 					<table class="table table-striped table-dark"
@@ -88,15 +196,18 @@
 					<td><input class="btn btn-danger" type="submit"
 						id="btnAtivarDesativar"
 						jsf:action="#{mBeanCliente.ativar_desativar(cliente)}"
-						style="margin-right: 5px; float: right" value="Ativar/Desativar"></input>
+						style="margin-right: 5px; float: right" value="Ativar/Desativar"
+						onclick="if(!confirm('Deseja alterar o status do cliente: #{cliente.nome}?')) {return false;}"></input>
 
 						<button class="btn btn-danger" type="submit" id="btnExcluir2"
 							jsf:action="#{mBeanCliente.excluir(cliente)}"
-							style="margin-right: 5px; float: right">Excluir</button>
+							style="margin-right: 5px; float: right"
+							onclick="if(!confirm('Deseja excluir o cliente: #{cliente.nome}?')) {return false;}">Excluir</button>
 
 						<button class="btn btn-primary" type="submit" id="btnEditar2"
 							style="margin-right: 5px; float: right"
-							jsf:action="#{mBeanCliente.alterar(cliente)}">Editar</button></td>
+							jsf:action="#{mBeanCliente.alterar(cliente)}"
+							onclick="if(!confirm('Deseja editar o cliente: #{cliente.nome}?')) {return false;}">Editar</button></td>
 				</ui:repeat>
 			</form>
 
@@ -107,11 +218,23 @@
 	</ui:define>
 	<ui:define name="scriptdapagina">
 		<script>
+			$('.cpf').mask('999.999.999-99');
+		</script>
+		<script>
 			$(document).ready(function esconder() {
 				$('.senha').mask('********');
 			});
 		</script>
 		<script>
+			function mostrarCadastro() {
+				if ($('.cadastro').css("display") != "none") {
+					$('.cadastro').css("display", "none");
+					$('.btncadastro').attr("src", "imagens/Hide_48px.png");
+				} else {
+					$('.cadastro').css("display", "inherit");
+					$('.btncadastro').attr("src", "imagens/Show_48px.png");
+				}
+			};
 			function mostrarClientes() {
 				if ($('.clientes').css("display") != "none") {
 					$('.clientes').css("display", "none");

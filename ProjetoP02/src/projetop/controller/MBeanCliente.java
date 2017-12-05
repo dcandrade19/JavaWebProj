@@ -15,6 +15,7 @@ import projetop.dao.ClienteDao;
 import projetop.entity.Cliente;
 
 /**
+ * Classe bean de controle do cliente
  * @author Diego
  *
  */
@@ -39,6 +40,9 @@ public class MBeanCliente {
 	private String cep;
 	private Boolean status;
 
+	/**
+	 * Verifica se existe uma conta de ADM caso não exista cria a conta
+	 */
 	public void setAdm() {
 
 		if (new ClienteDao().buscar("000.000.000-00") == null) {
@@ -53,6 +57,10 @@ public class MBeanCliente {
 		}
 	}
 
+	/**
+	 * Salva um cliente caso o mesmo não exista na base, caso contrario
+	 * altera o cliente existente
+	 */
 	public void salvar() {
 		Cliente cliente = new Cliente();
 
@@ -73,8 +81,12 @@ public class MBeanCliente {
 		if (this.cpf == null) {
 
 			new ClienteDao().inserir(cliente);
+			FacesContext.getCurrentInstance().addMessage("",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente: " + cliente.getNome() + " salvo!", ""));
 		} else {
 			new ClienteDao().alterar(cliente);
+			FacesContext.getCurrentInstance().addMessage("",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente: " + cliente.getNome() + " alterado!", ""));
 			System.out.println(cpf);
 		}
 
@@ -83,13 +95,20 @@ public class MBeanCliente {
 		System.out.println(cliente.toString());
 	}
 
+	/**
+	 * Atualiza a lista de clientes
+	 */
 	public void carregar() {
 
 		clientes = new ClienteDao().listar();
 
 	}
 
-	public String alterar(Cliente cliente) {
+	/**
+	 * Seta os atributos para alteração
+	 * @param cliente
+	 */
+	public void alterar(Cliente cliente) {
 		this.cpf = cliente.getCpf();
 		this.nome = cliente.getNome();
 		this.telefone = cliente.getTelefone();
@@ -103,29 +122,44 @@ public class MBeanCliente {
 		this.estado = cliente.getEstado();
 		this.cep = cliente.getCep();
 		this.status = cliente.getStatus();
-
-		return "CadastroCliente.jsf";
 	}
 
+	/**
+	 * Ativa e Desativa a conta do cliente
+	 * @param cliente
+	 */
 	public void ativar_desativar(Cliente cliente) {
 		if (cliente.getStatus()) {
 			cliente.setStatus(false);
 			new ClienteDao().alterar(cliente);
+			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Cliente: " + cliente.getNome() + " desativado!", ""));
 		} else {
 			cliente.setStatus(true);
 			new ClienteDao().alterar(cliente);
+			FacesContext.getCurrentInstance().addMessage("",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente: " + cliente.getNome() + " ativado!", ""));
 		}
 	}
 
+	/**
+	 * Exclui o cliente da base
+	 * @param cliente
+	 */
 	public void excluir(Cliente cliente) {
+		String nome = cliente.getNome();
 		new ClienteDao().remover(cliente.getCpf());
 		clientes = new ClienteDao().listar();
 		if (cliente == resultadoBusca) {
 			resultadoBusca = null;
 		}
-		System.out.println("teste" + cliente.getCpf());
+		FacesContext.getCurrentInstance().addMessage("",
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente: " + nome + " excluido!", ""));
 	}
 
+	/**
+	 * Busca um cliente na base pelo CPF
+	 */
 	public void buscar() {
 		if (cpf != null) {
 			Cliente cliente = new ClienteDao().buscar(cpf);
@@ -146,14 +180,25 @@ public class MBeanCliente {
 				this.estado = cliente.getEstado();
 				this.cep = cliente.getCep();
 				this.status = cliente.getStatus();
+
+				FacesContext.getCurrentInstance().addMessage("",
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "CPF: " + cliente.getCpf() + " localizado!", ""));
 			} else {
-				System.out.println("CPF: " + cpf + " não localizado!");
+				FacesContext.getCurrentInstance().addMessage("",
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "CPF: " + cpf + " não localizado!", ""));
 			}
 		} else {
-			System.out.println("CPF Invalido!");
+			FacesContext.getCurrentInstance().addMessage("",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "CPF: inválido!", ""));
 		}
 	}
 
+	/**
+	 * Verifica se a senha e o cpf do cliente estão corretos
+	 * caso esteja insere o cliente na sessão
+	 * @param senha
+	 * @return
+	 */
 	public String entrar(String senha) {
 		if (cpf != null) {
 			Cliente cliente = new ClienteDao().buscar(cpf);
@@ -181,6 +226,10 @@ public class MBeanCliente {
 		return "";
 	}
 
+	/**
+	 * Retira o cliente atual da sessão
+	 * @return
+	 */
 	public String sair() {
 
 		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
@@ -191,6 +240,7 @@ public class MBeanCliente {
 		return "index.jsf";
 	}
 
+	// Getters and Setters
 	public ArrayList<Cliente> getClientes() {
 		return clientes;
 	}

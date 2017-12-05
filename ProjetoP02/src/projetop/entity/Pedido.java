@@ -16,15 +16,15 @@ import javax.persistence.OneToMany;
 public class Pedido {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer codigo;
 	private Date data;
 	private BigDecimal total;
-	
+
 	@ManyToOne
 	private Cliente cliente;
-	
-	@OneToMany(mappedBy="pedido",cascade=CascadeType.ALL)
+
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<Item> itens;
 
 	public Integer getCodigo() {
@@ -67,7 +67,5 @@ public class Pedido {
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
-	
-	
-	
+
 }
